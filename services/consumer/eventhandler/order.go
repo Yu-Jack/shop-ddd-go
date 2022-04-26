@@ -1,6 +1,8 @@
 package eventhandler
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type OrderCreatedEvent struct {
 	OrderId string `json:"id"`

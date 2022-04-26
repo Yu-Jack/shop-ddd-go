@@ -7,7 +7,7 @@ var db []*entity.Order
 type repo struct{}
 
 type Repository interface {
-	Save(o entity.Order)
+	Save(o *entity.Order)
 	UpdateOrderState(orderId string, newState string)
 	FindOrderByIds(orderId string) *entity.Order
 	GetAllOrders() []*entity.Order

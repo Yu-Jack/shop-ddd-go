@@ -7,7 +7,7 @@ import (
 )
 
 type Usecase interface {
-	CreateOrder(input CreateOrderInput) (entity.Order, error)
+	CreateOrder(input CreateOrderInput) (*entity.Order, error)
 	ApproveOrder(orderId string) error
 	RejectOrder(orderId string) error
 	FindOrderById(orderId string) (*entity.Order, error)

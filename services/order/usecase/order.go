@@ -5,15 +5,16 @@ import (
 	"github.com/google/uuid"
 )
 
-func (u *usecase) CreateOrder(input CreateOrderInput) (entity.Order, error) {
+func (u *usecase) CreateOrder(input CreateOrderInput) (*entity.Order, error) {
 	o := entity.NewOrder()
 	o.ID = uuid.NewString()
 	o.UserID = input.UserID
 	o.Name = input.Name
 	o.State = "PENDING"
 	o.Amount = 10 // fixed amount for demo
+	o.CreatedOrderEvent()
 	u.repo.Save(o)
-	u.eventBus.Publish("OrderCreated", o.ToJsonString())
+	u.eventBus.Publish(o.DomainEvents)
 	return o, nil
 }
 

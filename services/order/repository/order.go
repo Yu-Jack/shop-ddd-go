@@ -2,8 +2,8 @@ package repository
 
 import "github.com/Yu-Jack/shop-ddd-go-order/entity"
 
-func (r *repo) Save(o entity.Order) {
-	db = append(db, &o)
+func (r *repo) Save(o *entity.Order) {
+	db = append(db, o)
 }
 
 func (r *repo) UpdateOrderState(orderid string, newState string) {
