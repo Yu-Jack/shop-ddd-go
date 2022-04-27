@@ -2,18 +2,18 @@ package eventhandler
 
 import (
 	"github.com/Yu-Jack/dddcore"
-	"github.com/Yu-Jack/shop-ddd-go-order/usecase"
+	ucOrder "github.com/Yu-Jack/shop-ddd-go-order/usecase/order"
 )
 
 type eventHandler struct {
-	usecase  usecase.Usecase
-	eventBus *dddcore.EventBus
+	orderUsecase ucOrder.Usecase
+	eventBus     *dddcore.EventBus
 }
 
-func New(usecase usecase.Usecase, eventBus *dddcore.EventBus) *eventHandler {
+func New(orderUsecase ucOrder.Usecase, eventBus *dddcore.EventBus) *eventHandler {
 	return &eventHandler{
-		usecase:  usecase,
-		eventBus: eventBus,
+		orderUsecase: orderUsecase,
+		eventBus:     eventBus,
 	}
 }
 

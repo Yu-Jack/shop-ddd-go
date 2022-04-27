@@ -1,4 +1,4 @@
-package usecase
+package order
 
 import (
 	"github.com/Yu-Jack/shop-ddd-go-order/entity"

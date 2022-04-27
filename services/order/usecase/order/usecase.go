@@ -1,9 +1,8 @@
-package usecase
+package order
 
 import (
 	"github.com/Yu-Jack/dddcore"
 	"github.com/Yu-Jack/shop-ddd-go-order/entity"
-	"github.com/Yu-Jack/shop-ddd-go-order/repository"
 )
 
 type Usecase interface {
@@ -15,11 +14,11 @@ type Usecase interface {
 }
 
 type usecase struct {
-	repo     repository.Repository
+	repo     Repository
 	eventBus *dddcore.EventBus
 }
 
-func New(repo repository.Repository, eventBus *dddcore.EventBus) Usecase {
+func New(repo Repository, eventBus *dddcore.EventBus) Usecase {
 	return &usecase{
 		repo:     repo,
 		eventBus: eventBus,

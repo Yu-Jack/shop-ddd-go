@@ -5,9 +5,9 @@ import (
 
 	"github.com/Yu-Jack/dddcore"
 	"github.com/Yu-Jack/shop-ddd-go-order/eventhandler"
-	"github.com/Yu-Jack/shop-ddd-go-order/repository"
-	"github.com/Yu-Jack/shop-ddd-go-order/request"
-	"github.com/Yu-Jack/shop-ddd-go-order/usecase"
+	repoOrder "github.com/Yu-Jack/shop-ddd-go-order/repository/order"
+	reqOrder "github.com/Yu-Jack/shop-ddd-go-order/request/order"
+	ucOrder "github.com/Yu-Jack/shop-ddd-go-order/usecase/order"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -15,8 +15,8 @@ import (
 func main() {
 	eventBus := dddcore.NewEventBus()
 
-	orderRepo := repository.New()
-	orderUsecase := usecase.New(orderRepo, eventBus)
+	orderRepo := repoOrder.New()
+	orderUsecase := ucOrder.New(orderRepo, eventBus)
 	orderEventHandler := eventhandler.New(orderUsecase, eventBus)
 	orderEventHandler.StartEventHanlder()
 
@@ -29,23 +29,23 @@ func main() {
 	})
 
 	r.GET("/order/:id", func(c *gin.Context) {
-		var getOrderReq request.GetOrderRequest
-		if err := c.ShouldBindUri(&getOrderReq); err != nil {
+		var req reqOrder.GetOrder
+		if err := c.ShouldBindUri(&req); err != nil {
 			c.JSON(400, gin.H{"msg": err.Error()})
 			return
 		}
-		o, _ := orderUsecase.FindOrderById(getOrderReq.ID)
+		o, _ := orderUsecase.FindOrderById(req.ID)
 		c.JSON(200, o)
 	})
 
 	r.POST("/order", func(c *gin.Context) {
-		var createOrderReq request.CreateOrderRequest
-		if err := c.ShouldBindJSON(&createOrderReq); err != nil {
+		var req reqOrder.CreateOrder
+		if err := c.ShouldBindJSON(&req); err != nil {
 			c.JSON(400, gin.H{"msg": err.Error()})
 			return
 		}
-		o, _ := orderUsecase.CreateOrder(usecase.CreateOrderInput{
-			UserID: createOrderReq.UserID,
+		o, _ := orderUsecase.CreateOrder(ucOrder.CreateOrderInput{
+			UserID: req.UserID,
 			Name:   fmt.Sprintf("OrderName - %s", uuid.NewString()),
 		})
 		c.JSON(200, o)

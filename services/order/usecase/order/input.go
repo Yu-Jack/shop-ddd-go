@@ -1,4 +1,4 @@
-package usecase
+package order
 
 type CreateOrderInput struct {
 	UserID string
