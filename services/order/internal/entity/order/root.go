@@ -30,6 +30,15 @@ func (r *repo) FindOrderByIds(orderid string) *Order {
 	return nil
 }
 
+func (r *repo) FindOrderItemByOrderId(orderId string) *OrderItem {
+	for _, oi := range dbOrderItem {
+		if oi.OrderID == orderId {
+			return oi
+		}
+	}
+	return nil
+}
+
 func (r *repo) FindOrderByConsumerId(consumerId string) *Order {
 	for _, o := range dbOrder {
 		if o.UserID == consumerId {

@@ -7,6 +7,7 @@ import (
 
 type Usecase interface {
 	CreateOrderItem(input CreateOrderItemInput) (orderEntity.OrderItem, error)
+	GetOrderItems(orderId string) ([]*orderEntity.OrderItem, error)
 }
 
 type usecase struct {
