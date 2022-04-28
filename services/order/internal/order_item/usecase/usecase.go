@@ -6,12 +6,7 @@ import (
 )
 
 type Usecase interface {
-	CreateOrder(input CreateOrderInput) (*orderEntity.Order, error)
-	ApproveOrder(orderId string) error
-	RejectOrder(orderId string) error
-	FindOrderById(orderId string) (*orderEntity.Order, error)
-	FindOrderByConsumerId(consumerId string) (*orderEntity.Order, error)
-	GetAllOrders() ([]*orderEntity.Order, error)
+	CreateOrderItem(input CreateOrderItemInput) (orderEntity.OrderItem, error)
 }
 
 type usecase struct {

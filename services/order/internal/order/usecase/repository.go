@@ -1,10 +1,11 @@
 package usecase
 
-import "github.com/Yu-Jack/shop-ddd-go-order/internal/order/entity"
+import orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 
 type Repository interface {
-	Save(o *entity.Order)
+	SaveOrder(o *orderEntity.Order)
 	UpdateOrderState(orderId string, newState string)
-	FindOrderByIds(orderId string) *entity.Order
-	GetAllOrders() []*entity.Order
+	FindOrderByIds(orderId string) *orderEntity.Order
+	FindOrderByConsumerId(consumerId string) *orderEntity.Order
+	GetAllOrders() []*orderEntity.Order
 }

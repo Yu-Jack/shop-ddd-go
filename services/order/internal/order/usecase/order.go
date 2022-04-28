@@ -1,20 +1,20 @@
 package usecase
 
 import (
-	"github.com/Yu-Jack/shop-ddd-go-order/internal/order/entity"
+	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	"github.com/google/uuid"
 )
 
-func (u *usecase) CreateOrder(input CreateOrderInput) (*entity.Order, error) {
-	o := entity.NewOrder()
+func (u *usecase) CreateOrder(input CreateOrderInput) (*orderEntity.Order, error) {
+	o := orderEntity.NewOrder()
 	o.ID = uuid.NewString()
 	o.UserID = input.UserID
 	o.Name = input.Name
 	o.State = "PENDING"
 	o.Amount = 10 // fixed amount for demo
-	o.CreatedOrderEvent()
-	u.repo.Save(o)
-	u.eventBus.Publish(o.DomainEvents)
+	// o.CreatedOrderEvent()
+	u.repo.SaveOrder(o)
+	// u.eventBus.Publish(o.DomainEvents)
 	return o, nil
 }
 
@@ -28,12 +28,17 @@ func (u *usecase) RejectOrder(orderId string) error {
 	return nil
 }
 
-func (u *usecase) FindOrderById(orderId string) (*entity.Order, error) {
+func (u *usecase) FindOrderById(orderId string) (*orderEntity.Order, error) {
 	o := u.repo.FindOrderByIds(orderId)
 	return o, nil
 }
 
-func (u *usecase) GetAllOrders() ([]*entity.Order, error) {
+func (u *usecase) FindOrderByConsumerId(consumerId string) (*orderEntity.Order, error) {
+	o := u.repo.FindOrderByConsumerId(consumerId)
+	return o, nil
+}
+
+func (u *usecase) GetAllOrders() ([]*orderEntity.Order, error) {
 	os := u.repo.GetAllOrders()
 	return os, nil
 }

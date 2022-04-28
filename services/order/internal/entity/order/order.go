@@ -1,4 +1,4 @@
-package entity
+package order
 
 import (
 	"encoding/json"
