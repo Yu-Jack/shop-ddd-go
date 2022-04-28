@@ -1,7 +1,7 @@
-package order
+package usecase
 
 import (
-	"github.com/Yu-Jack/shop-ddd-go-order/entity"
+	"github.com/Yu-Jack/shop-ddd-go-order/internal/order/entity"
 	"github.com/google/uuid"
 )
 

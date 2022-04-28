@@ -1,6 +1,6 @@
-package order
+package usecase
 
-import "github.com/Yu-Jack/shop-ddd-go-order/entity"
+import "github.com/Yu-Jack/shop-ddd-go-order/internal/order/entity"
 
 type Repository interface {
 	Save(o *entity.Order)

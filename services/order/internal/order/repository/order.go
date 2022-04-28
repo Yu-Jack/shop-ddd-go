@@ -1,6 +1,6 @@
-package order
+package repository
 
-import "github.com/Yu-Jack/shop-ddd-go-order/entity"
+import "github.com/Yu-Jack/shop-ddd-go-order/internal/order/entity"
 
 func (r *repo) Save(o *entity.Order) {
 	db = append(db, o)
