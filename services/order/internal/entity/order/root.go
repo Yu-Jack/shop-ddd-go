@@ -30,18 +30,19 @@ func (r *repo) FindOrderByIds(orderid string) *Order {
 	return nil
 }
 
-func (r *repo) FindOrderItemByOrderId(orderId string) *OrderItem {
+func (r *repo) FindOrderItemsByOrderId(orderId string) []*OrderItem {
+	ois := []*OrderItem{}
 	for _, oi := range dbOrderItem {
 		if oi.OrderID == orderId {
-			return oi
+			ois = append(ois, oi)
 		}
 	}
-	return nil
+	return ois
 }
 
-func (r *repo) FindOrderByConsumerId(consumerId string) *Order {
+func (r *repo) FindAvailableOrderByConsumerId(consumerId string) *Order {
 	for _, o := range dbOrder {
-		if o.UserID == consumerId {
+		if o.UserID == consumerId && o.State == "PENDING" {
 			return o
 		}
 	}
@@ -52,7 +53,7 @@ func (r *repo) GetAllOrders() []*Order {
 	return dbOrder
 }
 
-func (r *repo) GetAll() []*OrderItem {
+func (r *repo) GetAllOrderItems() []*OrderItem {
 	return dbOrderItem
 }
 

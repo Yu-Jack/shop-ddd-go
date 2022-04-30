@@ -6,6 +6,7 @@ type Repository interface {
 	SaveOrder(o *orderEntity.Order)
 	UpdateOrderState(orderId string, newState string)
 	FindOrderByIds(orderId string) *orderEntity.Order
-	FindOrderByConsumerId(consumerId string) *orderEntity.Order
+	FindAvailableOrderByConsumerId(consumerId string) *orderEntity.Order
 	GetAllOrders() []*orderEntity.Order
+	FindOrderItemsByOrderId(orderId string) []*orderEntity.OrderItem
 }

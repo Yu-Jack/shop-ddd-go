@@ -1,11 +1,8 @@
 package network
 
 import (
-	"fmt"
-
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 type net struct {
@@ -25,20 +22,19 @@ func New(r *gin.Engine, orderUc orderUc.Usecase) Net {
 }
 
 func (n *net) Route() {
-	n.r.POST("/order", n.createOrder)
+	n.r.POST("/order/checkout", n.checkoutOrder)
 	n.r.GET("/order/:id", n.getOrder)
 	n.r.GET("/orders", n.getOrders)
 }
 
-func (n *net) createOrder(c *gin.Context) {
+func (n *net) checkoutOrder(c *gin.Context) {
 	var req CreateOrderReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	}
-	o, _ := n.orderUc.CreateOrder(orderUc.CreateOrderInput{
+	o, _ := n.orderUc.CheckoutOrder(orderUc.CheckoutOrderInput{
 		UserID: req.UserID,
-		Name:   fmt.Sprintf("OrderName - %s", uuid.NewString()),
 	})
 	c.JSON(200, o)
 }

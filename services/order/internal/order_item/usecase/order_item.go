@@ -17,6 +17,6 @@ func (u *usecase) CreateOrderItem(input CreateOrderItemInput) (orderEntity.Order
 }
 
 func (u *usecase) GetOrderItems(orderId string) ([]*orderEntity.OrderItem, error) {
-	ois := u.repo.GetAll()
+	ois := u.repo.GetAllOrderItems()
 	return ois, nil
 }

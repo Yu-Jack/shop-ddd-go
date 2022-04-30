@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/Yu-Jack/shop-ddd-go-consumer/entity"
+import (
+	"github.com/Yu-Jack/shop-ddd-go-consumer/entity"
+)
 
 func (repo *repo) DecreaseConsumerAmount(consumerId string, orderAmount int) bool {
 	for _, c := range db {
