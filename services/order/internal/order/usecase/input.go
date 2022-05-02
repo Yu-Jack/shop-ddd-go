@@ -1,10 +1,10 @@
 package usecase
 
 type CreateOrderInput struct {
-	UserID string
-	Name   string
+	ConsumerID string
+	Name       string
 }
 
 type CheckoutOrderInput struct {
-	UserID string
+	ConsumerID string
 }

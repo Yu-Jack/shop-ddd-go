@@ -42,8 +42,8 @@ func (n *net) createOrderItem(c *gin.Context) {
 	o, _ := n.orderUc.FindAvailableOrderByConsumerId(req.ConsumerID)
 	if o == nil {
 		o, _ = n.orderUc.CreateOrder(orderUc.CreateOrderInput{
-			UserID: req.ConsumerID,
-			Name:   fmt.Sprintf("OrderName - %s", uuid.NewString()),
+			ConsumerID: req.ConsumerID,
+			Name:       fmt.Sprintf("OrderName - %s", uuid.NewString()),
 		})
 	}
 

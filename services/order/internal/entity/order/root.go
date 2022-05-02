@@ -42,7 +42,7 @@ func (r *repo) FindOrderItemsByOrderId(orderId string) []*OrderItem {
 
 func (r *repo) FindAvailableOrderByConsumerId(consumerId string) *Order {
 	for _, o := range dbOrder {
-		if o.UserID == consumerId && o.State == "PENDING" {
+		if o.ConsumerID == consumerId && o.State == "PENDING" {
 			return o
 		}
 	}

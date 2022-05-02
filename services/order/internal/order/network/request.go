@@ -5,5 +5,5 @@ type GetOrderReq struct {
 }
 
 type CreateOrderReq struct {
-	UserID string `json:"user_id"`
+	ConsumerID string `json:"consumer_id"`
 }

@@ -6,7 +6,7 @@ import (
 )
 
 func (u *usecase) CheckoutOrder(input CheckoutOrderInput) (*orderEntity.Order, error) {
-	o := u.repo.FindAvailableOrderByConsumerId(input.UserID)
+	o := u.repo.FindAvailableOrderByConsumerId(input.ConsumerID)
 	ois := u.repo.FindOrderItemsByOrderId(o.ID)
 	totalAmount := 0
 	for _, oi := range ois {
@@ -21,7 +21,7 @@ func (u *usecase) CheckoutOrder(input CheckoutOrderInput) (*orderEntity.Order, e
 func (u *usecase) CreateOrder(input CreateOrderInput) (*orderEntity.Order, error) {
 	o := orderEntity.NewOrder()
 	o.ID = uuid.NewString()
-	o.UserID = input.UserID
+	o.ConsumerID = input.ConsumerID
 	o.Name = input.Name
 	o.State = "PENDING"
 	u.repo.SaveOrder(o)

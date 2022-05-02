@@ -1,7 +1,7 @@
 package network
 
 type CreateOrderItemReq struct {
-	ConsumerID string `json:"user_id"`
+	ConsumerID string `json:"consumer_id"`
 	Name       string `json:"name"`
 	Amount     int    `json:"amount"`
 }

@@ -34,7 +34,7 @@ func (n *net) checkoutOrder(c *gin.Context) {
 		return
 	}
 	o, _ := n.orderUc.CheckoutOrder(orderUc.CheckoutOrderInput{
-		UserID: req.UserID,
+		ConsumerID: req.ConsumerID,
 	})
 	c.JSON(200, o)
 }
