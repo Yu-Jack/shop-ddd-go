@@ -1,3 +1,7 @@
+## Introduction
+
+This project is used to practice DDD and Clean Architecture.  
+
 ## Bootstrap
 
 1. `make up`
