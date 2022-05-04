@@ -1,8 +1,12 @@
-package repository
+package entity
 
-import (
-	"github.com/Yu-Jack/shop-ddd-go-consumer/entity"
-)
+var db = []*Consumer{}
+
+type repo struct{}
+
+func New() *repo {
+	return &repo{}
+}
 
 func (repo *repo) DecreaseConsumerAmount(consumerId string, orderAmount int) bool {
 	for _, c := range db {
@@ -14,11 +18,11 @@ func (repo *repo) DecreaseConsumerAmount(consumerId string, orderAmount int) boo
 	return false
 }
 
-func (repo *repo) CreateConsumer(c entity.Consumer) error {
+func (repo *repo) CreateConsumer(c Consumer) error {
 	db = append(db, &c)
 	return nil
 }
 
-func (repo *repo) GetAllConsumers() ([]*entity.Consumer, error) {
+func (repo *repo) GetAllConsumers() ([]*Consumer, error) {
 	return db, nil
 }

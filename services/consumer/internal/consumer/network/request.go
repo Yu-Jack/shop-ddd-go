@@ -1,4 +1,4 @@
-package request
+package network
 
 type CreateConsumerRequest struct {
 	FirstName string `json:"first_name"`
