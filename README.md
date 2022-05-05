@@ -8,6 +8,16 @@ This project is used to practice DDD and Clean Architecture.
 
 p.s. I use minikube.
 
+## Folder structure
+
+```
+├── kit / -> Put all shared kit in here.
+│   └── dddcore
+└── services/ -> This consist of every independent services which could be developed alone.
+    ├── order
+    └── consumer
+```
+
 ## Infra setting
 
 ### kafka setting
