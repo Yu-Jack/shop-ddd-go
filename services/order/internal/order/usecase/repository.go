@@ -3,7 +3,7 @@ package usecase
 import orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 
 type Repository interface {
-	CreateOrder(o orderEntity.Order)
+	CreateOrder(o *orderEntity.Order)
 	SaveOrder(o orderEntity.Order)
 	UpdateOrderState(orderId string, newState string) error
 	FindOrderById(orderId string) (orderEntity.Order, error)

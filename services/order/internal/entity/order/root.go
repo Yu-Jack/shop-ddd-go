@@ -14,7 +14,7 @@ func New(db *gorm.DB) *repo {
 	}
 }
 
-func (r *repo) CreateOrder(o Order) {
+func (r *repo) CreateOrder(o *Order) {
 	r.db.Create(o)
 }
 
@@ -79,6 +79,6 @@ func (r *repo) GetAllOrderItemsByOrderId(orderId string) (ois []OrderItem, err e
 	return ois, nil
 }
 
-func (r *repo) CreateOrderItem(oi OrderItem) {
+func (r *repo) CreateOrderItem(oi *OrderItem) {
 	r.db.Create(oi)
 }

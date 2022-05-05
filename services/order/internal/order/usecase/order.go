@@ -29,7 +29,7 @@ func (u *usecase) CreateOrder(input CreateOrderInput) (orderEntity.Order, error)
 	o.ConsumerID = input.ConsumerID
 	o.Name = input.Name
 	o.State = "PENDING"
-	u.repo.CreateOrder(*o)
+	u.repo.CreateOrder(o)
 	return *o, nil
 }
 

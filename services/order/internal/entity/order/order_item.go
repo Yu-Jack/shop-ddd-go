@@ -9,5 +9,7 @@ type OrderItem struct {
 	OrderID      string          `json:"order_id"`
 	Name         string          `json:"name"`
 	Amount       int             `json:"amount"`
+	CreatedAt    int             `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt    int             `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DomainEvents []dddcore.Event `json:"-" gorm:"-"`
 }

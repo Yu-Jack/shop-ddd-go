@@ -6,14 +6,14 @@ import (
 )
 
 func (u *usecase) CreateOrderItem(input CreateOrderItemInput) (orderEntity.OrderItem, error) {
-	oi := orderEntity.OrderItem{
+	oi := &orderEntity.OrderItem{
 		ID:      uuid.NewString(),
 		Name:    input.Name,
 		Amount:  input.Amount,
 		OrderID: input.OrderID,
 	}
 	u.repo.CreateOrderItem(oi)
-	return oi, nil
+	return *oi, nil
 }
 
 func (u *usecase) GetOrderItems(orderId string) ([]orderEntity.OrderItem, error) {
