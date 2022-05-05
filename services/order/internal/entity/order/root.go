@@ -1,62 +1,84 @@
 package order
 
-var dbOrderItem []*OrderItem
-var dbOrder []*Order
+import (
+	"gorm.io/gorm"
+)
 
-type repo struct{}
-
-func New() *repo {
-	return &repo{}
+type repo struct {
+	db *gorm.DB
 }
 
-func (r *repo) SaveOrder(o *Order) {
-	dbOrder = append(dbOrder, o)
-}
-
-func (r *repo) UpdateOrderState(orderid string, newState string) {
-	for _, o := range dbOrder {
-		if o.ID == orderid {
-			o.State = newState
-		}
+func New(db *gorm.DB) *repo {
+	return &repo{
+		db: db,
 	}
 }
 
-func (r *repo) FindOrderByIds(orderid string) *Order {
-	for _, o := range dbOrder {
-		if o.ID == orderid {
-			return o
-		}
+func (r *repo) CreateOrder(o Order) {
+	r.db.Create(o)
+}
+
+func (r *repo) SaveOrder(o Order) {
+	r.db.Save(o)
+}
+
+func (r *repo) UpdateOrderState(orderid string, newState string) error {
+	result := r.db.Model(&Order{}).Where("id = ?", orderid).Where("state = ?", "CHECKOUT_PENDING").Update("state", newState)
+
+	if result.Error != nil {
+		return result.Error
 	}
+
 	return nil
 }
 
-func (r *repo) FindOrderItemsByOrderId(orderId string) []*OrderItem {
-	ois := []*OrderItem{}
-	for _, oi := range dbOrderItem {
-		if oi.OrderID == orderId {
-			ois = append(ois, oi)
-		}
+func (r *repo) FindOrderById(orderid string) (o Order, err error) {
+	result := r.db.Where("id = ?", orderid).Find(&o)
+
+	if result.Error != nil {
+		return o, result.Error
 	}
-	return ois
+
+	return o, nil
 }
 
-func (r *repo) FindAvailableOrderByConsumerId(consumerId string) *Order {
-	for _, o := range dbOrder {
-		if o.ConsumerID == consumerId && o.State == "PENDING" {
-			return o
-		}
+func (r *repo) FindTotalAmountByOrderId(orderId string) (amount int64, err error) {
+	result := map[string]interface{}{}
+	dbResult := r.db.Model(&OrderItem{}).Select("sum(amount) as total").Where("order_id = ?", orderId).Find(&result)
+
+	if dbResult.Error != nil {
+		return amount, dbResult.Error
 	}
-	return nil
+
+	return result["total"].(int64), nil
 }
 
-func (r *repo) GetAllOrders() []*Order {
-	return dbOrder
+func (r *repo) FindAvailableOrderByConsumerId(consumerId string) (order Order, err error) {
+	result := r.db.Where("state = ?", "PENDING").Where("consumer_id = ?", consumerId).First(&order)
+
+	if result.Error != nil {
+		return Order{}, result.Error
+	}
+
+	return order, nil
 }
 
-func (r *repo) GetAllOrderItems() []*OrderItem {
-	return dbOrderItem
+func (r *repo) GetAllOrders() (orders []Order, err error) {
+	result := r.db.Find(&orders)
+	if result.Error != nil {
+		return orders, result.Error
+	}
+	return orders, nil
 }
 
-func (r *repo) SaveOrderItem(oi OrderItem) {
-	dbOrderItem = append(dbOrderItem, &oi)
+func (r *repo) GetAllOrderItems() (ois []OrderItem, err error) {
+	result := r.db.Find(&ois)
+	if result.Error != nil {
+		return ois, result.Error
+	}
+	return ois, nil
+}
+
+func (r *repo) CreateOrderItem(oi OrderItem) {
+	r.db.Create(oi)
 }

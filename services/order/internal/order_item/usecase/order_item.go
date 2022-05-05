@@ -12,11 +12,14 @@ func (u *usecase) CreateOrderItem(input CreateOrderItemInput) (orderEntity.Order
 		Amount:  input.Amount,
 		OrderID: input.OrderID,
 	}
-	u.repo.SaveOrderItem(oi)
+	u.repo.CreateOrderItem(oi)
 	return oi, nil
 }
 
-func (u *usecase) GetOrderItems(orderId string) ([]*orderEntity.OrderItem, error) {
-	ois := u.repo.GetAllOrderItems()
+func (u *usecase) GetOrderItems(orderId string) ([]orderEntity.OrderItem, error) {
+	ois, err := u.repo.GetAllOrderItems()
+	if err != nil {
+		return ois, err
+	}
 	return ois, nil
 }

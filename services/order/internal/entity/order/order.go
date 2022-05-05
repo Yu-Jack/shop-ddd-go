@@ -7,12 +7,12 @@ import (
 )
 
 type Order struct {
-	ID           string          `json:"id"`
+	ID           string          `json:"id" gorm:"primarykey"`
 	ConsumerID   string          `json:"consumer_id"`
 	Name         string          `json:"name"`
 	State        string          `json:"state"`
 	Amount       int             `json:"amount"`
-	DomainEvents []dddcore.Event `json:"-"`
+	DomainEvents []dddcore.Event `json:"-" gorm:"-:all"`
 }
 
 func NewOrder() *Order {

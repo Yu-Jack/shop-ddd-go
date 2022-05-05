@@ -6,13 +6,13 @@ import (
 )
 
 type Usecase interface {
-	CheckoutOrder(input CheckoutOrderInput) (*orderEntity.Order, error)
-	CreateOrder(input CreateOrderInput) (*orderEntity.Order, error)
+	CheckoutOrder(input CheckoutOrderInput) (orderEntity.Order, error)
+	CreateOrder(input CreateOrderInput) (orderEntity.Order, error)
 	ApproveOrder(orderId string) error
 	RejectOrder(orderId string) error
-	FindOrderById(orderId string) (*orderEntity.Order, error)
-	FindAvailableOrderByConsumerId(consumerId string) (*orderEntity.Order, error)
-	GetAllOrders() ([]*orderEntity.Order, error)
+	FindOrderById(orderId string) (orderEntity.Order, error)
+	FindAvailableOrderByConsumerId(consumerId string) (orderEntity.Order, error)
+	GetAllOrders() ([]orderEntity.Order, error)
 }
 
 type usecase struct {
