@@ -1,8 +1,8 @@
 package eventhandler
 
 import (
-	"github.com/Yu-Jack/dddcore"
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 )
 
 type eventHandler struct {

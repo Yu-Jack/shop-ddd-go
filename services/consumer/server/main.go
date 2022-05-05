@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Yu-Jack/dddcore"
 	"github.com/Yu-Jack/shop-ddd-go-consumer/internal/consumer"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 	"github.com/gin-gonic/gin"
 )
 

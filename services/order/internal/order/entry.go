@@ -1,11 +1,11 @@
 package order
 
 import (
-	"github.com/Yu-Jack/dddcore"
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	orderEventHandler "github.com/Yu-Jack/shop-ddd-go-order/internal/order/eventhandler"
 	orderNet "github.com/Yu-Jack/shop-ddd-go-order/internal/order/network"
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

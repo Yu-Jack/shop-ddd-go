@@ -1,7 +1,7 @@
 package order
 
 import (
-	"github.com/Yu-Jack/dddcore"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 	"gorm.io/gorm"
 
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"

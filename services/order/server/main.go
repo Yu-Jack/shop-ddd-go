@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Yu-Jack/dddcore"
 	orderEntry "github.com/Yu-Jack/shop-ddd-go-order/internal/order"
 	orderItemEntry "github.com/Yu-Jack/shop-ddd-go-order/internal/order_item"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

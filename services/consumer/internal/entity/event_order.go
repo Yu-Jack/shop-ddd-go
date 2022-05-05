@@ -1,6 +1,6 @@
 package entity
 
-import "github.com/Yu-Jack/dddcore"
+import "github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 
 func NewOrderApprovedEvent(orderId string) []dddcore.Event {
 	e := dddcore.NewEvent()

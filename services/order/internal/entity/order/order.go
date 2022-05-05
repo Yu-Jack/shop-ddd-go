@@ -3,7 +3,7 @@ package order
 import (
 	"encoding/json"
 
-	"github.com/Yu-Jack/dddcore"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 )
 
 type Order struct {

@@ -1,11 +1,11 @@
 package consumer
 
 import (
-	"github.com/Yu-Jack/dddcore"
 	"github.com/Yu-Jack/shop-ddd-go-consumer/internal/consumer/eventhandler"
 	consumerNet "github.com/Yu-Jack/shop-ddd-go-consumer/internal/consumer/network"
 	consumerUc "github.com/Yu-Jack/shop-ddd-go-consumer/internal/consumer/usecase"
 	"github.com/Yu-Jack/shop-ddd-go-consumer/internal/entity"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 	"github.com/gin-gonic/gin"
 )
 

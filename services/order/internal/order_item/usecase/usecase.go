@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/Yu-Jack/dddcore"
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
+	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 )
 
 type Usecase interface {
