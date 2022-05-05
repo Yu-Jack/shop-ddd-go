@@ -6,17 +6,17 @@ import (
 )
 
 func (u *usecase) CreateConsumer(input CreateConsumerInput) entity.Consumer {
-	c := entity.Consumer{
+	c := &entity.Consumer{
 		ID:        uuid.NewString(),
 		FirstName: input.FirstName,
 		LastName:  input.LastName,
 		Amount:    input.Amount,
 	}
 	u.repo.CreateConsumer(c)
-	return c
+	return *c
 }
 
-func (u *usecase) GetAllConsumers() []*entity.Consumer {
+func (u *usecase) GetAllConsumers() []entity.Consumer {
 	cs, _ := u.repo.GetAllConsumers()
 	return cs
 }

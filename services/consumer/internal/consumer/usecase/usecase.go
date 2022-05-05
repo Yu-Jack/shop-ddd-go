@@ -8,7 +8,7 @@ import (
 type Usecase interface {
 	CheckOrder(orderId string, orderAmount int, consumerId string)
 	CreateConsumer(input CreateConsumerInput) entity.Consumer
-	GetAllConsumers() []*entity.Consumer
+	GetAllConsumers() []entity.Consumer
 }
 
 type usecase struct {
