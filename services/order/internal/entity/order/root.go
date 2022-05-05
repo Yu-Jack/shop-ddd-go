@@ -71,8 +71,8 @@ func (r *repo) GetAllOrders() (orders []Order, err error) {
 	return orders, nil
 }
 
-func (r *repo) GetAllOrderItems() (ois []OrderItem, err error) {
-	result := r.db.Find(&ois)
+func (r *repo) GetAllOrderItemsByOrderId(orderId string) (ois []OrderItem, err error) {
+	result := r.db.Where("order_id = ?", orderId).Find(&ois)
 	if result.Error != nil {
 		return ois, result.Error
 	}
