@@ -17,23 +17,22 @@ func New(db *gorm.DB) *repo {
 }
 
 func (repo *repo) DecreaseConsumerAmount(consumerId string, orderAmount int) error {
-	repo.db.Begin()
-	defer repo.db.Commit()
+	tx := repo.db.Begin()
 
 	var c Consumer
-	repo.db.Model(&Consumer{}).Where("id = ?", consumerId).Find(&c)
+	tx.Model(&Consumer{}).Where("id = ?", consumerId).Find(&c)
 
 	if c.Amount < orderAmount {
 		return errors.New("Consumer doesn't have enough money")
 	}
-
 	c.Amount -= orderAmount
-	result := repo.db.Save(c)
+	tx.Save(c)
+
+	result := tx.Commit()
 
 	if result.Error != nil {
 		return result.Error
 	}
-
 	return nil
 }
 
