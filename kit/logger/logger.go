@@ -9,17 +9,27 @@ import (
 	"github.com/google/uuid"
 )
 
-var LOGGER_NAME = "logger"
+const LOGGER_NAME = "logger"
+
+func defaultLogger() (logger log.Logger) {
+	logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stdout))
+	logger = log.With(logger, "ts", log.DefaultTimestampUTC)
+	logger = log.With(logger, "request_id", uuid.NewString())
+	logger = log.With(logger, "caller", log.DefaultCaller)
+	return logger
+}
 
 func New() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
-		var logger log.Logger
-		logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stdout))
-		logger = log.With(logger, "request_id", uuid.NewString())
-		ctx.Set(LOGGER_NAME, logger)
-
+		ctx.Set(LOGGER_NAME, defaultLogger())
 		ctx.Next()
 	}
+}
+
+func NewContext() context.Context {
+	ctx := context.Background()
+	ctx = context.WithValue(ctx, LOGGER_NAME, defaultLogger())
+	return ctx
 }
 
 func GetLogger(ctx context.Context) log.Logger {
