@@ -1,15 +1,19 @@
 package eventhandler
 
-import "context"
+import (
+	"github.com/Yu-Jack/shop-ddd-go/kit/logger"
+)
 
 func (eh *eventHandler) orderApproved() {
 	go eh.eventBus.Subscribe("OrderApproved", func(orderId string) {
-		eh.orderUsecase.ApproveOrder(context.Background(), orderId)
+		ctx := logger.NewContext()
+		eh.orderUsecase.ApproveOrder(ctx, orderId)
 	})
 }
 
 func (eh *eventHandler) orderRejected() {
 	go eh.eventBus.Subscribe("OrderRejected", func(orderId string) {
-		eh.orderUsecase.RejectOrder(context.Background(), orderId)
+		ctx := logger.NewContext()
+		eh.orderUsecase.RejectOrder(ctx, orderId)
 	})
 }
