@@ -1,6 +1,7 @@
 package network
 
 import (
+	"github.com/Yu-Jack/shop-ddd-go-order/internal/order/error_code"
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -30,22 +31,30 @@ func (n *net) Route() {
 func (n *net) checkoutOrder(c *gin.Context) {
 	var req CreateOrderReq
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, gin.H{"msg": err.Error()})
+		c.JSON(400, error_code.New(error_code.REQUEST_BODY_IS_INVALID))
 		return
 	}
-	o, _ := n.orderUc.CheckoutOrder(orderUc.CheckoutOrderInput{
+	o, err := n.orderUc.CheckoutOrder(orderUc.CheckoutOrderInput{
 		ConsumerID: req.ConsumerID,
 	})
+
+	if err != nil {
+		c.JSON(200, error_code.New(error_code.ORDER_IS_NOT_AVAILABLE))
+		return
+	}
+
 	c.JSON(200, o)
 }
 
 func (n *net) getOrder(c *gin.Context) {
 	var req GetOrderReq
 	if err := c.ShouldBindUri(&req); err != nil {
-		c.JSON(400, gin.H{"msg": err.Error()})
+		c.JSON(400, error_code.New(error_code.REQUEST_URI_IS_INVALID))
 		return
 	}
+
 	o, _ := n.orderUc.FindOrderById(req.ID)
+
 	c.JSON(200, o)
 }
 
