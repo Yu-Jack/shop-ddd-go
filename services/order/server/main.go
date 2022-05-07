@@ -4,6 +4,7 @@ import (
 	orderEntry "github.com/Yu-Jack/shop-ddd-go-order/internal/order"
 	orderItemEntry "github.com/Yu-Jack/shop-ddd-go-order/internal/order_item"
 	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
+	logger "github.com/Yu-Jack/shop-ddd-go/kit/logger"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -15,6 +16,9 @@ func main() {
 		panic("failed to connect database")
 	}
 	r := gin.Default()
+
+	r.Use(logger.New())
+
 	eventBus := dddcore.NewEventBus()
 	orderEntry.Register(r, eventBus, db)
 	orderItemEntry.Register(r, eventBus, db)

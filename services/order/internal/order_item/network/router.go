@@ -5,6 +5,7 @@ import (
 
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
 	orderItemUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order_item/usecase"
+	logger "github.com/Yu-Jack/shop-ddd-go/kit/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -33,6 +34,8 @@ func (n *net) Route() {
 }
 
 func (n *net) createOrderItem(c *gin.Context) {
+	log := logger.GetLogger(c)
+
 	var req CreateOrderItemReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
@@ -41,7 +44,8 @@ func (n *net) createOrderItem(c *gin.Context) {
 
 	o, err := n.orderUc.FindAvailableOrderByConsumerId(c, req.ConsumerID)
 	if err != nil {
-		o, _ = n.orderUc.CreateOrder(orderUc.CreateOrderInput{
+		log.Log("msg", "start to create new order", "consumer_id", req.ConsumerID)
+		o, _ = n.orderUc.CreateOrder(c, orderUc.CreateOrderInput{
 			ConsumerID: req.ConsumerID,
 			Name:       fmt.Sprintf("OrderName - %s", uuid.NewString()),
 		})

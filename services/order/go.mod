@@ -3,7 +3,7 @@ module github.com/Yu-Jack/shop-ddd-go-order
 go 1.16
 
 require (
-	github.com/Yu-Jack/shop-ddd-go v0.0.0-20220507034627-74e609566b30
+	github.com/Yu-Jack/shop-ddd-go v0.0.0-20220507042128-6eab65567db1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-kit/kit v0.12.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
@@ -16,7 +16,6 @@ require (
 	github.com/segmentio/kafka-go v0.4.31 // indirect
 	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/ugorji/go v1.2.7 // indirect
-	golang.org/x/crypto v0.0.0-20220427172511-eb4f295cb31f // indirect
 	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect

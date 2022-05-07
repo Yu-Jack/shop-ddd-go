@@ -45,6 +45,8 @@ github.com/Yu-Jack/shop-ddd-go v0.0.0-20220505150306-8403e0e28e08 h1:Nc+sctbfVwH
 github.com/Yu-Jack/shop-ddd-go v0.0.0-20220505150306-8403e0e28e08/go.mod h1:/dazlI947aO07YrQsffMDn4lBCkO9EpI1EsJUFNK58U=
 github.com/Yu-Jack/shop-ddd-go v0.0.0-20220507034627-74e609566b30 h1:qpqQYuBIcFONRreZTEwyFaTxnRYJcQVIPDi/lB6hQyQ=
 github.com/Yu-Jack/shop-ddd-go v0.0.0-20220507034627-74e609566b30/go.mod h1:BO+UOdOKi0HKxYNR1zBrT0RPzlgjmr7uG6DKlCPkpko=
+github.com/Yu-Jack/shop-ddd-go v0.0.0-20220507042128-6eab65567db1 h1:UVkawpOptQaDUvGBZds9sFhLuMY4Nnua19blNZqWf+4=
+github.com/Yu-Jack/shop-ddd-go v0.0.0-20220507042128-6eab65567db1/go.mod h1:rb06I7SgBhapqHcq2U5OfdkxM/Px/2cA1CEKosAu3wo=
 github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5/go.mod h1:SkGFH1ia65gfNATL8TAiHDNxPzPdmEL5uirI2Uyuz6c=
 github.com/ajstarks/svgo v0.0.0-20180226025133-644b8db467af/go.mod h1:K08gAheRH3/J6wwsYMMT4xOr94bZjxIelGM0+d/wbFw=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
@@ -458,6 +460,8 @@ golang.org/x/crypto v0.0.0-20210915214749-c084706c2272/go.mod h1:GvvjBRRGRdwPK5y
 golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/crypto v0.0.0-20220427172511-eb4f295cb31f h1:OeJjE6G4dgCY4PIXvIRQbE8+RX+uXZyGhUy/ksMGJoc=
 golang.org/x/crypto v0.0.0-20220427172511-eb4f295cb31f/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
+golang.org/x/crypto v0.0.0-20220507011949-2cf3adece122 h1:NvGWuYG8dkDHFSKksI1P9faiVJ9rayE6l0+ouWVIDs8=
+golang.org/x/crypto v0.0.0-20220507011949-2cf3adece122/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/exp v0.0.0-20180321215751-8460e604b9de/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20180807140117-3d87b88a115f/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
 golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
