@@ -79,6 +79,11 @@ func (r *repo) GetAllOrderItemsByOrderId(orderId string) (ois []OrderItem, err e
 	return ois, nil
 }
 
-func (r *repo) CreateOrderItem(oi *OrderItem) {
-	r.db.Create(oi)
+func (r *repo) CreateOrderItem(oi *OrderItem) error {
+	result := r.db.Create(oi)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
 }

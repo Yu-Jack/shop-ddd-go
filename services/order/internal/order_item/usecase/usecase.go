@@ -1,13 +1,15 @@
 package usecase
 
 import (
+	"context"
+
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 )
 
 type Usecase interface {
-	CreateOrderItem(input CreateOrderItemInput) (orderEntity.OrderItem, error)
-	GetOrderItems(orderId string) ([]orderEntity.OrderItem, error)
+	CreateOrderItem(ctx context.Context, input CreateOrderItemInput) (orderEntity.OrderItem, error)
+	GetOrderItems(ctx context.Context, orderId string) ([]orderEntity.OrderItem, error)
 }
 
 type usecase struct {

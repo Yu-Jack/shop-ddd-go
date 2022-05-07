@@ -51,7 +51,7 @@ func (n *net) createOrderItem(c *gin.Context) {
 		})
 	}
 
-	oi, _ := n.orderItemUc.CreateOrderItem(orderItemUc.CreateOrderItemInput{
+	oi, _ := n.orderItemUc.CreateOrderItem(c, orderItemUc.CreateOrderItemInput{
 		OrderID: o.ID,
 		Name:    req.Name,
 		Amount:  req.Amount,
@@ -65,6 +65,6 @@ func (n *net) getOrderItems(c *gin.Context) {
 		c.JSON(400, gin.H{"msg": err.Error()})
 		return
 	}
-	ois, _ := n.orderItemUc.GetOrderItems(req.OrderID)
+	ois, _ := n.orderItemUc.GetOrderItems(c, req.OrderID)
 	c.JSON(200, ois)
 }
