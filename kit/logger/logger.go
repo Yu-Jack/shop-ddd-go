@@ -2,7 +2,9 @@ package logger
 
 import (
 	"context"
+	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/go-kit/kit/log"
@@ -34,6 +36,11 @@ func NewContext() context.Context {
 }
 
 func Log(ctx context.Context, keyvals ...interface{}) {
+	_, file, no, _ := runtime.Caller(1)
+	full := fmt.Sprintf("%s:%d", file, no)
+
 	logger := ctx.Value(LOGGER_NAME).(log.Logger)
-	logger.Log(keyvals)
+	logger = log.With(logger, "caller", full)
+
+	logger.Log(keyvals...)
 }
