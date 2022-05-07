@@ -16,10 +16,11 @@ func defaultLogger() (logger log.Logger) {
 	logger = log.With(logger, "ts", log.DefaultTimestampUTC)
 	logger = log.With(logger, "request_id", uuid.NewString())
 	logger = log.With(logger, "caller", log.DefaultCaller)
+	logger.Log()
 	return logger
 }
 
-func New() func(ctx *gin.Context) {
+func Middleware() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		ctx.Set(LOGGER_NAME, defaultLogger())
 		ctx.Next()
@@ -32,7 +33,7 @@ func NewContext() context.Context {
 	return ctx
 }
 
-func GetLogger(ctx context.Context) log.Logger {
-	l := ctx.Value(LOGGER_NAME)
-	return l.(log.Logger)
+func Log(ctx context.Context, keyvals ...interface{}) {
+	logger := ctx.Value(LOGGER_NAME).(log.Logger)
+	logger.Log(keyvals)
 }
