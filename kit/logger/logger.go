@@ -17,7 +17,6 @@ func defaultLogger() (logger log.Logger) {
 	logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stdout))
 	logger = log.With(logger, "ts", log.DefaultTimestampUTC)
 	logger = log.With(logger, "request_id", uuid.NewString())
-	logger = log.With(logger, "caller", log.DefaultCaller)
 	logger.Log()
 	return logger
 }
