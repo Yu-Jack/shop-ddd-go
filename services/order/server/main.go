@@ -17,7 +17,7 @@ func main() {
 	}
 	r := gin.Default()
 
-	r.Use(logger.New())
+	r.Use(logger.Middleware())
 
 	eventBus := dddcore.NewEventBus()
 	orderEntry.Register(r, eventBus, db)

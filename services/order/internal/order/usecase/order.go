@@ -9,17 +9,16 @@ import (
 )
 
 func (u *usecase) CheckoutOrder(ctx context.Context, input CheckoutOrderInput) (orderEntity.Order, error) {
-	log := logger.GetLogger(ctx)
 
 	o, err := u.repo.FindAvailableOrderByConsumerId(input.ConsumerID)
 	if err != nil {
-		log.Log("err", err)
+		logger.Log(ctx, "err", err)
 		return o, err
 	}
 
 	amount, err := u.repo.FindTotalAmountByOrderId(o.ID)
 	if err != nil {
-		log.Log("err", err)
+		logger.Log(ctx, "err", err)
 		return o, err
 	}
 	o.Amount = int(amount)
@@ -51,33 +50,30 @@ func (u *usecase) RejectOrder(ctx context.Context, orderId string) error {
 }
 
 func (u *usecase) FindOrderById(ctx context.Context, orderId string) (orderEntity.Order, error) {
-	log := logger.GetLogger(ctx)
 
 	o, err := u.repo.FindOrderById(orderId)
 	if err != nil {
-		log.Log("err", err)
+		logger.Log(ctx, "err", err)
 		return o, err
 	}
 	return o, nil
 }
 
 func (u *usecase) FindAvailableOrderByConsumerId(ctx context.Context, consumerId string) (orderEntity.Order, error) {
-	log := logger.GetLogger(ctx)
 
 	o, err := u.repo.FindAvailableOrderByConsumerId(consumerId)
 	if err != nil {
-		log.Log("err", err)
+		logger.Log(ctx, "err", err)
 		return o, err
 	}
 	return o, nil
 }
 
 func (u *usecase) GetAllOrders(ctx context.Context) ([]orderEntity.Order, error) {
-	log := logger.GetLogger(ctx)
 
 	os, err := u.repo.GetAllOrders()
 	if err != nil {
-		log.Log("err", err)
+		logger.Log(ctx, "err", err)
 		return os, err
 	}
 	return os, nil

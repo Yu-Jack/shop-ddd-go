@@ -30,8 +30,6 @@ func (n *net) Route() {
 }
 
 func (n *net) checkoutOrder(c *gin.Context) {
-	log := logger.GetLogger(c)
-
 	var req CreateOrderReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, error_code.New(error_code.REQUEST_BODY_IS_INVALID))
@@ -42,7 +40,7 @@ func (n *net) checkoutOrder(c *gin.Context) {
 	})
 
 	if err != nil {
-		log.Log("err", err)
+		logger.Log(c, "err", err)
 		c.JSON(200, error_code.New(error_code.ORDER_IS_NOT_AVAILABLE))
 		return
 	}
