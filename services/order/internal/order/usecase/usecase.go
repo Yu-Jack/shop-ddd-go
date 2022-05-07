@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"context"
+
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 )
@@ -11,7 +13,7 @@ type Usecase interface {
 	ApproveOrder(orderId string) error
 	RejectOrder(orderId string) error
 	FindOrderById(orderId string) (orderEntity.Order, error)
-	FindAvailableOrderByConsumerId(consumerId string) (orderEntity.Order, error)
+	FindAvailableOrderByConsumerId(ctx context.Context, consumerId string) (orderEntity.Order, error)
 	GetAllOrders() ([]orderEntity.Order, error)
 }
 

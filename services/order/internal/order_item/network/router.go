@@ -39,7 +39,7 @@ func (n *net) createOrderItem(c *gin.Context) {
 		return
 	}
 
-	o, err := n.orderUc.FindAvailableOrderByConsumerId(req.ConsumerID)
+	o, err := n.orderUc.FindAvailableOrderByConsumerId(c, req.ConsumerID)
 	if err != nil {
 		o, _ = n.orderUc.CreateOrder(orderUc.CreateOrderInput{
 			ConsumerID: req.ConsumerID,

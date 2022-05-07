@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"context"
+
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	"github.com/google/uuid"
 )
@@ -51,7 +53,7 @@ func (u *usecase) FindOrderById(orderId string) (orderEntity.Order, error) {
 	return o, nil
 }
 
-func (u *usecase) FindAvailableOrderByConsumerId(consumerId string) (orderEntity.Order, error) {
+func (u *usecase) FindAvailableOrderByConsumerId(ctx context.Context, consumerId string) (orderEntity.Order, error) {
 	o, err := u.repo.FindAvailableOrderByConsumerId(consumerId)
 	if err != nil {
 		return o, err

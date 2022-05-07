@@ -16,7 +16,6 @@ func main() {
 	}
 	r := gin.Default()
 	eventBus := dddcore.NewEventBus()
-
 	orderEntry.Register(r, eventBus, db)
 	orderItemEntry.Register(r, eventBus, db)
 
