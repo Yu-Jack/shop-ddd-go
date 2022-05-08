@@ -3,7 +3,7 @@ module github.com/Yu-Jack/shop-ddd-go-order
 go 1.16
 
 require (
-	github.com/Yu-Jack/shop-ddd-go v0.0.0-20220508132347-a66ebcdf33a5
+	github.com/Yu-Jack/shop-ddd-go v0.0.0-20220508150444-da3215dc22e6
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-kit/kit v0.12.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
