@@ -3,7 +3,6 @@ package dddcore
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log"
 
 	"github.com/segmentio/kafka-go"
@@ -52,7 +51,9 @@ func (s *saga) AddStep(sd SagaData) error {
 }
 
 func (s *saga) Execute() error {
-	for i := 0; i < len(s.steps); i++ {
+	i := 0
+
+	for i >= 0 && i < len(s.steps) {
 		step := s.steps[i]
 		log.Println("start step: ", step.Name)
 
@@ -63,6 +64,7 @@ func (s *saga) Execute() error {
 			s.eventBus.SubscribeWithReader(reader, step.InvokeKey, func(value string) {
 				step.Invoke(s.ctx, value)
 				s.next <- 1
+				i++
 			})
 		}()
 
@@ -73,21 +75,18 @@ func (s *saga) Execute() error {
 				s.eventBus.SubscribeWithReader(reader, step.CompensationKey, func(value string) {
 					step.Compensation(s.ctx, value)
 					s.next <- 0
+					i-- // ready to go back execute previous compensation
 				})
 			}()
 		}
 
-		success := <-s.next // wait for previous step done
+		<-s.next // wait for previous step done
 
 		for _, reader := range readers {
 			log.Println("close reader")
 			reader.Close()
 		}
 
-		if success != 1 {
-			msg := fmt.Sprintf("saga failed in step-%d: %s", i, step.Name)
-			return errors.New(msg)
-		}
 	}
 
 	return nil

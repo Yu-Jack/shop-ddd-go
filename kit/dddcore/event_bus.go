@@ -59,9 +59,10 @@ func (eb *EventBus) Subscribe(groupId string, cb func(value string)) {
 			break
 		}
 		if groupId == string(m.Key) {
-			fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+			fmt.Printf("OKOKOKOKOK---message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 			cb(string(m.Value))
 		}
+		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 	}
 }
 
