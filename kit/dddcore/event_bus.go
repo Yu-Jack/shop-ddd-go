@@ -73,9 +73,10 @@ func (eb *EventBus) SubscribeWithReader(reader *kafka.Reader, key string, cb fun
 			break
 		}
 		if key == string(m.Key) {
-			fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+			fmt.Printf("OOOOOKKKKKK---message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 			cb(string(m.Value))
 		}
+		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 	}
 }
 
