@@ -25,6 +25,7 @@ func (saga *saga) CheckoutSaga(ctx context.Context, groupId string, eventUUID st
 	s := dddcore.NewSaga(ctx, groupId, saga.eventBus)
 
 	s.AddStep(dddcore.SagaData{
+		Name: "Validate if consumer is available to checkout",
 		Invoke: func(ctx context.Context, orderId string) {
 			saga.orderUc.ApproveOrder(ctx, orderId)
 		},

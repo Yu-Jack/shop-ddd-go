@@ -56,7 +56,7 @@ func (s *saga) Execute() error {
 		}()
 		success := <-s.next // wait for previous step done
 		if success != 1 {
-			msg := fmt.Sprintf("saga failed in %s", step.Name)
+			msg := fmt.Sprintf("saga failed in step-%d: %s", i, step.Name)
 			return errors.New(msg)
 		}
 	}
