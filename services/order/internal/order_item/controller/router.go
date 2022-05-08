@@ -1,4 +1,4 @@
-package network
+package controller
 
 import (
 	"fmt"
@@ -10,30 +10,30 @@ import (
 	"github.com/google/uuid"
 )
 
-type net struct {
+type ctrl struct {
 	r           *gin.Engine
 	orderUc     orderUc.Usecase
 	orderItemUc orderItemUc.Usecase
 }
 
-type Net interface {
+type Ctrl interface {
 	Route()
 }
 
-func New(r *gin.Engine, orderUc orderUc.Usecase, orderItemUc orderItemUc.Usecase) Net {
-	return &net{
+func New(r *gin.Engine, orderUc orderUc.Usecase, orderItemUc orderItemUc.Usecase) Ctrl {
+	return &ctrl{
 		r:           r,
 		orderUc:     orderUc,
 		orderItemUc: orderItemUc,
 	}
 }
 
-func (n *net) Route() {
+func (n *ctrl) Route() {
 	n.r.POST("/order/item", n.createOrderItem)
 	n.r.GET("/order/item/:order_id", n.getOrderItems)
 }
 
-func (n *net) createOrderItem(c *gin.Context) {
+func (n *ctrl) createOrderItem(c *gin.Context) {
 	var req CreateOrderItemReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})
@@ -57,7 +57,7 @@ func (n *net) createOrderItem(c *gin.Context) {
 	c.JSON(200, oi)
 }
 
-func (n *net) getOrderItems(c *gin.Context) {
+func (n *ctrl) getOrderItems(c *gin.Context) {
 	var req GetOrderItemReq
 	if err := c.ShouldBindUri(&req); err != nil {
 		c.JSON(400, gin.H{"msg": err.Error()})

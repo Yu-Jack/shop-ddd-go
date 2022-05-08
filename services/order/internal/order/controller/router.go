@@ -1,4 +1,4 @@
-package network
+package controller
 
 import (
 	"github.com/Yu-Jack/shop-ddd-go-order/internal/order/error_code"
@@ -7,29 +7,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type net struct {
+type ctrl struct {
 	r       *gin.Engine
 	orderUc orderUc.Usecase
 }
 
-type Net interface {
+type Ctrl interface {
 	Route()
 }
 
-func New(r *gin.Engine, orderUc orderUc.Usecase) Net {
-	return &net{
+func New(r *gin.Engine, orderUc orderUc.Usecase) Ctrl {
+	return &ctrl{
 		r:       r,
 		orderUc: orderUc,
 	}
 }
 
-func (n *net) Route() {
+func (n *ctrl) Route() {
 	n.r.POST("/order/checkout", n.checkoutOrder)
 	n.r.GET("/order/:id", n.getOrder)
 	n.r.GET("/orders", n.getOrders)
 }
 
-func (n *net) checkoutOrder(c *gin.Context) {
+func (n *ctrl) checkoutOrder(c *gin.Context) {
 	var req CreateOrderReq
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, error_code.New(error_code.REQUEST_BODY_IS_INVALID))
@@ -48,7 +48,7 @@ func (n *net) checkoutOrder(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-func (n *net) getOrder(c *gin.Context) {
+func (n *ctrl) getOrder(c *gin.Context) {
 	var req GetOrderReq
 	if err := c.ShouldBindUri(&req); err != nil {
 		c.JSON(400, error_code.New(error_code.REQUEST_URI_IS_INVALID))
@@ -60,7 +60,7 @@ func (n *net) getOrder(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-func (n *net) getOrders(c *gin.Context) {
+func (n *ctrl) getOrders(c *gin.Context) {
 	orders, _ := n.orderUc.GetAllOrders(c)
 	c.JSON(200, gin.H{
 		"orders": orders,

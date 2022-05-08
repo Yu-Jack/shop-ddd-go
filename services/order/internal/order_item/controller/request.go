@@ -1,4 +1,4 @@
-package network
+package controller
 
 type CreateOrderItemReq struct {
 	ConsumerID string `json:"consumer_id"`
