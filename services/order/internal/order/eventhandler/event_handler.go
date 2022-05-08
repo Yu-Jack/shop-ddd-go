@@ -10,14 +10,10 @@ type eventHandler struct {
 	eventBus     *dddcore.EventBus
 }
 
+// No used for temporarily.
 func New(orderUsecase orderUc.Usecase, eventBus *dddcore.EventBus) *eventHandler {
 	return &eventHandler{
 		orderUsecase: orderUsecase,
 		eventBus:     eventBus,
 	}
-}
-
-func (eh *eventHandler) StartEventHanlder() {
-	eh.orderApproved()
-	eh.orderRejected()
 }

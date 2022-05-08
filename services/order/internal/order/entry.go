@@ -3,7 +3,6 @@ package order
 import (
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	orderCtrl "github.com/Yu-Jack/shop-ddd-go-order/internal/order/controller"
-	orderEventHandler "github.com/Yu-Jack/shop-ddd-go-order/internal/order/eventhandler"
 	orderSaga "github.com/Yu-Jack/shop-ddd-go-order/internal/order/saga"
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
 	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
@@ -17,7 +16,5 @@ func Register(r *gin.Engine, eventBus *dddcore.EventBus, db *gorm.DB) {
 	orderUsecase := orderUc.New(repo, eventBus)
 	orderSa := orderSaga.NewSaga(eventBus, orderUsecase)
 
-	orderEventHandler := orderEventHandler.New(orderUsecase, eventBus)
-	orderEventHandler.StartEventHanlder()
 	orderCtrl.New(r, orderUsecase, orderSa).Route()
 }
