@@ -7,7 +7,7 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/go-kit/kit/log"
+	log "github.com/go-kit/log"
 	"github.com/google/uuid"
 )
 
