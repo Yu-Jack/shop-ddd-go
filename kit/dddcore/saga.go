@@ -3,11 +3,13 @@ package dddcore
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/segmentio/kafka-go"
 )
 
 type SagaData struct {
+	Name            string
 	Invoke          func(ctx context.Context, value string)
 	InvokeKey       string
 	Compensation    func(ctx context.Context, value string)
@@ -54,7 +56,8 @@ func (s *saga) Execute() error {
 		}()
 		success := <-s.next // wait for previous step done
 		if success != 1 {
-			return errors.New("saga failed")
+			msg := fmt.Sprintf("saga failed in %s", step.Name)
+			return errors.New(msg)
 		}
 	}
 
