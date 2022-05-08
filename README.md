@@ -11,15 +11,18 @@ p.s. I use minikube.
 ## Folder structure
 
 ```sh
-├── kit / # -> Put all shared kit in here.
+├── kit  # -> Put all shared kit in here./
 │   └── dddcore
-└── services/ # -> This consist of every independent services which could be developed alone.
-    ├── order # -> top domain model
+└── services/ # -> This consist of every independent services which could be developed alone./
+    ├── order # -> top domain model/
     │   ├── server # -> entry point
-    │   └── internal # -> all application codebase
-    │       ├── entity # -> only one package by layer
+    │   └── internal # -> all application codebase/
+    │       ├── entity # -> only one package by layer/
     │       │   └── order # -> aggregate root
-    │       ├── order # -> domain model (package by domain model)
+    │       ├── order # -> domain model (package by domain model)/
+    │       │   ├── controller # -> route & request & flow
+    │       │   ├── usecase # -> business logic
+    │       │   └── saga # -> controll transaction between microservices
     │       └── order_item
     └── consumer # -> another top domain model
 ```
