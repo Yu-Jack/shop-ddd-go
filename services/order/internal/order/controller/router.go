@@ -8,60 +8,63 @@ import (
 )
 
 type ctrl struct {
-	r       *gin.Engine
-	orderUc orderUc.Usecase
+	r         *gin.Engine
+	orderUc   orderUc.Usecase
+	orderSaga orderUc.Saga
 }
 
 type Ctrl interface {
 	Route()
 }
 
-func New(r *gin.Engine, orderUc orderUc.Usecase) Ctrl {
+func New(r *gin.Engine, orderUc orderUc.Usecase, orderSaga orderUc.Saga) Ctrl {
 	return &ctrl{
-		r:       r,
-		orderUc: orderUc,
+		r:         r,
+		orderUc:   orderUc,
+		orderSaga: orderSaga,
 	}
 }
 
-func (n *ctrl) Route() {
-	n.r.POST("/order/checkout", n.checkoutOrder)
-	n.r.GET("/order/:id", n.getOrder)
-	n.r.GET("/orders", n.getOrders)
+func (ct *ctrl) Route() {
+	ct.r.POST("/order/checkout", ct.checkoutOrder)
+	ct.r.GET("/order/:id", ct.getOrder)
+	ct.r.GET("/orders", ct.getOrders)
 }
 
-func (n *ctrl) checkoutOrder(c *gin.Context) {
+func (ct *ctrl) checkoutOrder(ctx *gin.Context) {
 	var req CreateOrderReq
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, error_code.New(error_code.REQUEST_BODY_IS_INVALID))
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(400, error_code.New(error_code.REQUEST_BODY_IS_INVALID))
 		return
 	}
-	o, err := n.orderUc.CheckoutOrder(c, orderUc.CheckoutOrderInput{
+
+	o, err := ct.orderUc.CheckoutOrder(ctx, orderUc.CheckoutOrderInput{
 		ConsumerID: req.ConsumerID,
-	})
+	}, ct.orderSaga)
 
 	if err != nil {
-		logger.Log(c, "err", err)
-		c.JSON(200, error_code.New(error_code.ORDER_IS_NOT_AVAILABLE))
+		logger.Log(ctx, "err", err)
+		ctx.JSON(200, error_code.New(error_code.ORDER_IS_NOT_AVAILABLE))
 		return
 	}
 
-	c.JSON(200, o)
+	ctx.JSON(200, o)
 }
 
-func (n *ctrl) getOrder(c *gin.Context) {
+func (ct *ctrl) getOrder(c *gin.Context) {
 	var req GetOrderReq
 	if err := c.ShouldBindUri(&req); err != nil {
 		c.JSON(400, error_code.New(error_code.REQUEST_URI_IS_INVALID))
 		return
 	}
 
-	o, _ := n.orderUc.FindOrderById(c, req.ID)
+	o, _ := ct.orderUc.FindOrderById(c, req.ID)
 
 	c.JSON(200, o)
 }
 
-func (n *ctrl) getOrders(c *gin.Context) {
-	orders, _ := n.orderUc.GetAllOrders(c)
+func (ct *ctrl) getOrders(c *gin.Context) {
+	orders, _ := ct.orderUc.GetAllOrders(c)
 	c.JSON(200, gin.H{
 		"orders": orders,
 	})

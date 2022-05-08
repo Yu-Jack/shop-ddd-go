@@ -8,7 +8,7 @@ import (
 )
 
 type Usecase interface {
-	CheckoutOrder(ctx context.Context, input CheckoutOrderInput) (orderEntity.Order, error)
+	CheckoutOrder(ctx context.Context, input CheckoutOrderInput, saga Saga) (orderEntity.Order, error)
 	CreateOrder(ctx context.Context, input CreateOrderInput) (orderEntity.Order, error)
 	ApproveOrder(ctx context.Context, orderId string) error
 	RejectOrder(ctx context.Context, orderId string) error

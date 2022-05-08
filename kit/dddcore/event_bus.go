@@ -39,7 +39,7 @@ func NewEventBus() *EventBus {
 	}
 }
 
-func (eb *EventBus) getReader(groupID string) *kafka.Reader {
+func NewReader(groupID string) *kafka.Reader {
 	reader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:   []string{server},
 		Topic:     topic,
@@ -52,7 +52,7 @@ func (eb *EventBus) getReader(groupID string) *kafka.Reader {
 }
 
 func (eb *EventBus) Subscribe(groupId string, cb func(value string)) {
-	reader := eb.getReader(groupId)
+	reader := NewReader(groupId)
 	for {
 		m, err := reader.ReadMessage(context.Background())
 		if err != nil {
@@ -61,6 +61,22 @@ func (eb *EventBus) Subscribe(groupId string, cb func(value string)) {
 		if groupId == string(m.Key) {
 			fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 			cb(string(m.Value))
+		}
+	}
+}
+
+func (eb *EventBus) SubscribeWithReader(reader *kafka.Reader, key string, cb func(value string)) {
+	defer reader.Close()
+
+	for {
+		m, err := reader.ReadMessage(context.Background())
+		if err != nil {
+			break
+		}
+		if key == string(m.Key) {
+			fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+			cb(string(m.Value))
+			break
 		}
 	}
 }

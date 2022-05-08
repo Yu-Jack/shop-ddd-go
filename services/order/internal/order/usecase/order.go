@@ -2,14 +2,14 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
 	"github.com/Yu-Jack/shop-ddd-go/kit/logger"
 	"github.com/google/uuid"
 )
 
-func (u *usecase) CheckoutOrder(ctx context.Context, input CheckoutOrderInput) (orderEntity.Order, error) {
-
+func (u *usecase) CheckoutOrder(ctx context.Context, input CheckoutOrderInput, saga Saga) (orderEntity.Order, error) {
 	o, err := u.repo.FindAvailableOrderByConsumerId(input.ConsumerID)
 	if err != nil {
 		logger.Log(ctx, "err", err)
@@ -26,6 +26,10 @@ func (u *usecase) CheckoutOrder(ctx context.Context, input CheckoutOrderInput) (
 	u.repo.SaveOrder(o)
 	o.CreatedOrderEvent()
 	u.eventBus.Publish(o.DomainEvents)
+
+	groupId := fmt.Sprintf("%s_%s", "order", o.ID)
+	saga.CheckoutSaga(ctx, groupId, o.ID)
+
 	return o, nil
 }
 

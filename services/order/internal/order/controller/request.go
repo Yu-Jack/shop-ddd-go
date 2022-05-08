@@ -1,4 +1,4 @@
-package network
+package controller
 
 type GetOrderReq struct {
 	ID string `uri:"id"`
