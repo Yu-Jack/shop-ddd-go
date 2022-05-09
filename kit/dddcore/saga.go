@@ -51,6 +51,7 @@ func (s *saga) AddStep(sd SagaData) error {
 }
 
 func (s *saga) Execute() error {
+	var success int
 	i := 0
 
 	for i >= 0 && i < len(s.steps) {
@@ -74,13 +75,18 @@ func (s *saga) Execute() error {
 				readers = append(readers, reader)
 				s.eventBus.SubscribeWithReader(reader, step.CompensationKey, func(value string) {
 					step.Compensation(s.ctx, value)
-					s.next <- 0
+					s.next <- 2
 					i-- // ready to go back execute previous compensation
 				})
 			}()
+		} else if step.Compensation == nil && step.CompensationKey == "" && success == 2 {
+			go func() {
+				s.next <- 2
+				i--
+			}()
 		}
 
-		<-s.next // wait for previous step done
+		success = <-s.next // wait for previous step done
 
 		for _, reader := range readers {
 			log.Println("close reader")
