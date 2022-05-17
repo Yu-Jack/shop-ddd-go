@@ -4,6 +4,7 @@ import (
 	"context"
 
 	orderEntity "github.com/Yu-Jack/shop-ddd-go-order/internal/entity/order"
+	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
 	"github.com/Yu-Jack/shop-ddd-go/kit/dddcore"
 )
 
@@ -13,11 +14,11 @@ type Usecase interface {
 }
 
 type usecase struct {
-	repo     Repository
+	repo     orderUc.Repository
 	eventBus *dddcore.EventBus
 }
 
-func New(repo Repository, eventBus *dddcore.EventBus) Usecase {
+func New(repo orderUc.Repository, eventBus *dddcore.EventBus) Usecase {
 	return &usecase{
 		repo:     repo,
 		eventBus: eventBus,

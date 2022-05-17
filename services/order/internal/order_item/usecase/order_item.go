@@ -9,7 +9,6 @@ import (
 )
 
 func (u *usecase) CreateOrderItem(ctx context.Context, input CreateOrderItemInput) (orderEntity.OrderItem, error) {
-	
 
 	oi := &orderEntity.OrderItem{
 		ID:      uuid.NewString(),
@@ -28,7 +27,6 @@ func (u *usecase) CreateOrderItem(ctx context.Context, input CreateOrderItemInpu
 }
 
 func (u *usecase) GetOrderItems(ctx context.Context, orderId string) ([]orderEntity.OrderItem, error) {
-	
 
 	ois, err := u.repo.GetAllOrderItemsByOrderId(orderId)
 	if err != nil {

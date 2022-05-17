@@ -10,4 +10,6 @@ type Repository interface {
 	FindAvailableOrderByConsumerId(consumerId string) (orderEntity.Order, error)
 	GetAllOrders() ([]orderEntity.Order, error)
 	FindTotalAmountByOrderId(orderId string) (amount int64, err error)
+	CreateOrderItem(oi *orderEntity.OrderItem) error
+	GetAllOrderItemsByOrderId(orderId string) ([]orderEntity.OrderItem, error)
 }
