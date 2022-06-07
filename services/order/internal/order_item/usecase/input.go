@@ -1,7 +1,8 @@
 package usecase
 
 type CreateOrderItemInput struct {
-	Name    string
-	Amount  int
-	OrderID string
+	Name       string
+	Amount     int
+	OrderID    string
+	ConsumerID string
 }

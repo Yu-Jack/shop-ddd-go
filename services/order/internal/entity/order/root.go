@@ -1,6 +1,9 @@
 package order
 
 import (
+	"fmt"
+
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -79,10 +82,28 @@ func (r *repo) GetAllOrderItemsByOrderId(orderId string) (ois []OrderItem, err e
 	return ois, nil
 }
 
-func (r *repo) CreateOrderItem(oi *OrderItem) error {
-	result := r.db.Create(oi)
-	if result.Error != nil {
-		return result.Error
+func (r *repo) CreateOrderItem(oi *OrderItem, consumerID string) error {
+	err := r.db.Transaction(func(tx *gorm.DB) error {
+		if oi.OrderID == "" {
+			o := &Order{
+				ID:         uuid.NewString(),
+				ConsumerID: consumerID,
+				Name:       fmt.Sprintf("OrderName - %s", uuid.NewString()),
+				State:      "PENDING",
+			}
+			if err := tx.Create(o).Error; err != nil {
+				return err
+			}
+			oi.OrderID = o.ID
+		}
+		if err := tx.Create(oi).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return err
 	}
 
 	return nil

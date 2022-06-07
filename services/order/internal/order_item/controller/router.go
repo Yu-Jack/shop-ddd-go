@@ -1,13 +1,9 @@
 package controller
 
 import (
-	"fmt"
-
 	orderUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order/usecase"
 	orderItemUc "github.com/Yu-Jack/shop-ddd-go-order/internal/order_item/usecase"
-	"github.com/Yu-Jack/shop-ddd-go/kit/logger"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 type ctrl struct {
@@ -40,19 +36,12 @@ func (n *ctrl) createOrderItem(c *gin.Context) {
 		return
 	}
 
-	o, err := n.orderUc.FindAvailableOrderByConsumerId(c, req.ConsumerID)
-	if err != nil {
-		logger.Log(c, "msg", "start to create new order", "consumer_id", req.ConsumerID)
-		o, _ = n.orderUc.CreateOrder(c, orderUc.CreateOrderInput{
-			ConsumerID: req.ConsumerID,
-			Name:       fmt.Sprintf("OrderName - %s", uuid.NewString()),
-		})
-	}
-
+	o, _ := n.orderUc.FindAvailableOrderByConsumerId(c, req.ConsumerID)
 	oi, _ := n.orderItemUc.CreateOrderItem(c, orderItemUc.CreateOrderItemInput{
-		OrderID: o.ID,
-		Name:    req.Name,
-		Amount:  req.Amount,
+		OrderID:    o.ID,
+		Name:       req.Name,
+		Amount:     req.Amount,
+		ConsumerID: req.ConsumerID,
 	})
 	c.JSON(200, oi)
 }
