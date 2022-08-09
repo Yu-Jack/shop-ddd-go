@@ -1,9 +1,9 @@
 package order
 
 import (
-	repository "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/order"
-	router "github.com/Yu-Jack/shop-ddd-go/internal/router/handler/order"
-	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/order"
+	repository "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/shop"
+	router "github.com/Yu-Jack/shop-ddd-go/internal/router/handler/shop"
+	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"

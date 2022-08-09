@@ -3,7 +3,7 @@ package order
 import (
 	"fmt"
 
-	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/order"
+	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

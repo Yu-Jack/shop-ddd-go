@@ -3,7 +3,7 @@ package order
 import (
 	"context"
 
-	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/order"
+	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/google/uuid"
 )

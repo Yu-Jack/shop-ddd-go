@@ -3,8 +3,8 @@ package order
 import (
 	"context"
 
-	repo "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/order"
-	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/order"
+	repo "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/shop"
+	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 )
 
 type CreateOrderItemInput struct {

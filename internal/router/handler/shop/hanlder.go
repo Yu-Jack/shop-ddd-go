@@ -1,7 +1,7 @@
 package order
 
 import (
-	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/order"
+	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/gin-gonic/gin"
 )

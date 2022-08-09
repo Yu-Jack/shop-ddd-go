@@ -1,7 +1,7 @@
 package order
 
 import (
-	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/order"
+	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 	"gorm.io/gorm"
 )
 
