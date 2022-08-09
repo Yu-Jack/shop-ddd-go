@@ -2,7 +2,7 @@ package order
 
 import (
 	repository "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/order"
-	router "github.com/Yu-Jack/shop-ddd-go/internal/router/order"
+	router "github.com/Yu-Jack/shop-ddd-go/internal/router/handler/order"
 	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/order"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/gin-gonic/gin"
