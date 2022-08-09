@@ -1,4 +1,4 @@
-package order
+package shop
 
 type GetOrderReq struct {
 	ID string `uri:"id"`

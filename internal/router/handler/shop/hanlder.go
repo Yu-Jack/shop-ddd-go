@@ -1,4 +1,4 @@
-package order
+package shop
 
 import (
 	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop"

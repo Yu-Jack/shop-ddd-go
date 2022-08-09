@@ -1,4 +1,4 @@
-package order
+package shop
 
 import "github.com/Yu-Jack/shop-ddd-go/pkg/dddcore"
 

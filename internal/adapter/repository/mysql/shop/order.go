@@ -1,4 +1,4 @@
-package order
+package shop
 
 import (
 	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
