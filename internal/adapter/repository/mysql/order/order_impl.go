@@ -8,16 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type order struct {
-	db *gorm.DB
-}
-
-func New(db *gorm.DB) Order {
-	return &order{
-		db: db,
-	}
-}
-
 func (r *order) CreateOrder(o *domain.Order) {
 	r.db.Create(o)
 }

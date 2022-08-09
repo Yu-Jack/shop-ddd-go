@@ -23,7 +23,7 @@ type orderItem struct {
 	repo repo.Order
 }
 
-func NewOrderItem() OrderItem {
+func NewOrderItem(repo repo.Order) OrderItem {
 	return &orderItem{
 		repo: repo,
 	}
