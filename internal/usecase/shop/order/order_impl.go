@@ -1,14 +1,14 @@
-package shop
+package order
 
 import (
 	"context"
 
-	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
+	"github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/google/uuid"
 )
 
-func (usecase *order) CheckoutOrder(ctx context.Context, input CheckoutOrderInput) (domain.Order, error) {
+func (usecase *usecase) CheckoutOrder(ctx context.Context, input CheckoutOrderInput) (shop.Order, error) {
 	o, err := usecase.repo.FindAvailableOrderByConsumerId(input.ConsumerID)
 	if err != nil {
 		logger.Log(ctx, "err", err)
@@ -32,8 +32,8 @@ func (usecase *order) CheckoutOrder(ctx context.Context, input CheckoutOrderInpu
 	return o, nil
 }
 
-func (usecase *order) CreateOrder(ctx context.Context, input CreateOrderInput) (domain.Order, error) {
-	o := domain.Order{}
+func (usecase *usecase) CreateOrder(ctx context.Context, input CreateOrderInput) (shop.Order, error) {
+	o := shop.Order{}
 	o.ID = uuid.NewString()
 	o.ConsumerID = input.ConsumerID
 	o.Name = input.Name
@@ -42,17 +42,17 @@ func (usecase *order) CreateOrder(ctx context.Context, input CreateOrderInput) (
 	return o, nil
 }
 
-func (usecase *order) ApproveOrder(ctx context.Context, orderId string) error {
+func (usecase *usecase) ApproveOrder(ctx context.Context, orderId string) error {
 	err := usecase.repo.UpdateOrderState(orderId, "APPROVED")
 	return err
 }
 
-func (usecase *order) RejectOrder(ctx context.Context, orderId string) error {
+func (usecase *usecase) RejectOrder(ctx context.Context, orderId string) error {
 	err := usecase.repo.UpdateOrderState(orderId, "REJECTED")
 	return err
 }
 
-func (usecase *order) FindOrderById(ctx context.Context, orderId string) (domain.Order, error) {
+func (usecase *usecase) FindOrderById(ctx context.Context, orderId string) (shop.Order, error) {
 
 	o, err := usecase.repo.FindOrderById(orderId)
 	if err != nil {
@@ -62,7 +62,7 @@ func (usecase *order) FindOrderById(ctx context.Context, orderId string) (domain
 	return o, nil
 }
 
-func (usecase *order) FindAvailableOrderByConsumerId(ctx context.Context, consumerId string) (domain.Order, error) {
+func (usecase *usecase) FindAvailableOrderByConsumerId(ctx context.Context, consumerId string) (shop.Order, error) {
 
 	o, err := usecase.repo.FindAvailableOrderByConsumerId(consumerId)
 	if err != nil {
@@ -72,7 +72,7 @@ func (usecase *order) FindAvailableOrderByConsumerId(ctx context.Context, consum
 	return o, nil
 }
 
-func (usecase *order) GetAllOrders(ctx context.Context) ([]domain.Order, error) {
+func (usecase *usecase) GetAllOrders(ctx context.Context) ([]shop.Order, error) {
 
 	os, err := usecase.repo.GetAllOrders()
 	if err != nil {

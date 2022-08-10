@@ -1,7 +1,7 @@
 package shop
 
 import (
-	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
+	"github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 	"gorm.io/gorm"
 )
 
@@ -24,30 +24,30 @@ type repoOrderItem struct {
 	UpdatedAt int    `json:"updated_at" gorm:"autoUpdateTime:milli"`
 }
 
-type Order interface {
-	CreateOrder(o *domain.Order)
-	SaveOrder(o domain.Order)
+type Repo interface {
+	CreateOrder(o *shop.Order)
+	SaveOrder(o shop.Order)
 	UpdateOrderState(orderId string, newState string) error
-	FindOrderById(orderId string) (domain.Order, error)
-	FindAvailableOrderByConsumerId(consumerId string) (domain.Order, error)
-	GetAllOrders() ([]domain.Order, error)
+	FindOrderById(orderId string) (shop.Order, error)
+	FindAvailableOrderByConsumerId(consumerId string) (shop.Order, error)
+	GetAllOrders() ([]shop.Order, error)
 	FindTotalAmountByOrderId(orderId string) (amount int64, err error)
-	CreateOrderItem(oi *domain.OrderItem, consumerID string) error
-	GetAllOrderItemsByOrderId(orderId string) ([]domain.OrderItem, error)
+	CreateOrderItem(oi *shop.OrderItem, consumerID string) error
+	GetAllOrderItemsByOrderId(orderId string) ([]shop.OrderItem, error)
 }
 
-type order struct {
+type repo struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) Order {
-	return &order{
+func NewRepo(db *gorm.DB) Repo {
+	return &repo{
 		db: db,
 	}
 }
 
-func (repoOrder repoOrder) transformDomain() domain.Order {
-	return domain.Order{
+func (repoOrder repoOrder) transformDomain() shop.Order {
+	return shop.Order{
 		ID:         repoOrder.ID,
 		ConsumerID: repoOrder.ConsumerID,
 		Name:       repoOrder.Name,
@@ -58,8 +58,8 @@ func (repoOrder repoOrder) transformDomain() domain.Order {
 	}
 }
 
-func (repoOrderItem repoOrderItem) transformDomain() domain.OrderItem {
-	return domain.OrderItem{
+func (repoOrderItem repoOrderItem) transformDomain() shop.OrderItem {
+	return shop.OrderItem{
 		ID:        repoOrderItem.ID,
 		OrderID:   repoOrderItem.OrderID,
 		Name:      repoOrderItem.Name,

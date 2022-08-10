@@ -1,9 +1,10 @@
 package order
 
 import (
-	repository "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/shop"
+	shopRepo "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/shop"
 	router "github.com/Yu-Jack/shop-ddd-go/internal/router/handler/shop"
-	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop"
+	"github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop/order"
+	"github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop/order_item"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -19,9 +20,9 @@ func main() {
 	r := gin.Default()
 	r.Use(logger.Middleware())
 
-	repo := repository.New(db)
-	orderUsecase := usecase.NewOrder(repo)
-	orderItemUsecase := usecase.NewOrderItem(repo)
+	repo := shopRepo.NewRepo(db)
+	orderUsecase := order.NewUsecase(repo)
+	orderItemUsecase := order_item.NewUsecase(repo)
 	router.New(r, orderUsecase, orderItemUsecase).Route()
 
 	r.Run()

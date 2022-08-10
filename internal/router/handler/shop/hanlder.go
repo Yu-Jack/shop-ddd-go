@@ -1,7 +1,8 @@
 package shop
 
 import (
-	usecase "github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop"
+	"github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop/order"
+	"github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop/order_item"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/logger"
 	"github.com/gin-gonic/gin"
 )
@@ -9,15 +10,15 @@ import (
 type route struct {
 	engine *gin.Engine
 
-	orderUc     usecase.Order
-	orderItemUc usecase.OrderItem
+	orderUc     order.Usecase
+	orderItemUc order_item.Usecase
 }
 
 type Router interface {
 	Route()
 }
 
-func New(engine *gin.Engine, orderUc usecase.Order, orderItemUc usecase.OrderItem) Router {
+func New(engine *gin.Engine, orderUc order.Usecase, orderItemUc order_item.Usecase) Router {
 	return &route{
 		engine:      engine,
 		orderUc:     orderUc,
@@ -40,7 +41,7 @@ func (r *route) checkoutOrder(ctx *gin.Context) {
 		return
 	}
 
-	o, err := r.orderUc.CheckoutOrder(ctx, usecase.CheckoutOrderInput{
+	o, err := r.orderUc.CheckoutOrder(ctx, order.CheckoutOrderInput{
 		ConsumerID: req.ConsumerID,
 	})
 
@@ -80,7 +81,7 @@ func (r *route) createOrderItem(c *gin.Context) {
 	}
 
 	o, _ := r.orderUc.FindAvailableOrderByConsumerId(c, req.ConsumerID)
-	oi, _ := r.orderItemUc.CreateOrderItem(c, usecase.CreateOrderItemInput{
+	oi, _ := r.orderItemUc.CreateOrderItem(c, order_item.CreateOrderItemInput{
 		OrderID:    o.ID,
 		Name:       req.Name,
 		Amount:     req.Amount,
