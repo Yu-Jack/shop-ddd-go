@@ -2,6 +2,7 @@ package shop
 
 import (
 	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
+	shopUC "github.com/Yu-Jack/shop-ddd-go/internal/usecase/shop"
 	"gorm.io/gorm"
 )
 
@@ -24,23 +25,11 @@ type repoOrderItem struct {
 	UpdatedAt int    `json:"updated_at" gorm:"autoUpdateTime:milli"`
 }
 
-type Order interface {
-	CreateOrder(o *domain.Order)
-	SaveOrder(o domain.Order)
-	UpdateOrderState(orderId string, newState string) error
-	FindOrderById(orderId string) (domain.Order, error)
-	FindAvailableOrderByConsumerId(consumerId string) (domain.Order, error)
-	GetAllOrders() ([]domain.Order, error)
-	FindTotalAmountByOrderId(orderId string) (amount int64, err error)
-	CreateOrderItem(oi *domain.OrderItem, consumerID string) error
-	GetAllOrderItemsByOrderId(orderId string) ([]domain.OrderItem, error)
-}
-
 type order struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) Order {
+func New(db *gorm.DB) shopUC.ShopRepo {
 	return &order{
 		db: db,
 	}

@@ -3,7 +3,6 @@ package shop
 import (
 	"context"
 
-	repo "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/shop"
 	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
 )
 
@@ -27,10 +26,10 @@ type Order interface {
 }
 
 type order struct {
-	repo repo.Order
+	repo ShopRepo
 }
 
-func NewOrder(repo repo.Order) Order {
+func NewOrder(repo ShopRepo) Order {
 	return &order{
 		repo: repo,
 	}
