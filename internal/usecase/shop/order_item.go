@@ -20,10 +20,10 @@ type OrderItem interface {
 }
 
 type orderItem struct {
-	repo repo.Order
+	repo repo.Repo
 }
 
-func NewOrderItem(repo repo.Order) OrderItem {
+func NewOrderItem(repo repo.Repo) OrderItem {
 	return &orderItem{
 		repo: repo,
 	}

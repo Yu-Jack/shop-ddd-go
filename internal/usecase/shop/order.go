@@ -27,10 +27,10 @@ type Order interface {
 }
 
 type order struct {
-	repo repo.Order
+	repo repo.Repo
 }
 
-func NewOrder(repo repo.Order) Order {
+func NewOrder(repo repo.Repo) Order {
 	return &order{
 		repo: repo,
 	}

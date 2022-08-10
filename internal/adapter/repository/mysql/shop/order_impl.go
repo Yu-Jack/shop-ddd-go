@@ -8,15 +8,15 @@ import (
 	"gorm.io/gorm"
 )
 
-func (r *order) CreateOrder(o *domain.Order) {
+func (r *repo) CreateOrder(o *domain.Order) {
 	r.db.Create(o)
 }
 
-func (r *order) SaveOrder(o domain.Order) {
+func (r *repo) SaveOrder(o domain.Order) {
 	r.db.Save(o)
 }
 
-func (r *order) UpdateOrderState(orderid string, newState string) error {
+func (r *repo) UpdateOrderState(orderid string, newState string) error {
 	result := r.db.Model(&repoOrder{}).Where("id = ?", orderid).Where("state = ?", "CHECKOUT_PENDING").Update("state", newState)
 
 	if result.Error != nil {
@@ -26,7 +26,7 @@ func (r *order) UpdateOrderState(orderid string, newState string) error {
 	return nil
 }
 
-func (r *order) FindOrderById(orderid string) (domain.Order, error) {
+func (r *repo) FindOrderById(orderid string) (domain.Order, error) {
 	repoO := repoOrder{}
 	result := r.db.Where("id = ?", orderid).Find(&repoO)
 
@@ -37,7 +37,7 @@ func (r *order) FindOrderById(orderid string) (domain.Order, error) {
 	return repoO.transformDomain(), nil
 }
 
-func (r *order) FindTotalAmountByOrderId(orderId string) (amount int64, err error) {
+func (r *repo) FindTotalAmountByOrderId(orderId string) (amount int64, err error) {
 	result := map[string]interface{}{}
 	dbResult := r.db.Model(&repoOrderItem{}).Select("sum(amount) as total").Where("order_id = ?", orderId).Find(&result)
 
@@ -48,7 +48,7 @@ func (r *order) FindTotalAmountByOrderId(orderId string) (amount int64, err erro
 	return result["total"].(int64), nil
 }
 
-func (r *order) FindAvailableOrderByConsumerId(consumerId string) (order domain.Order, err error) {
+func (r *repo) FindAvailableOrderByConsumerId(consumerId string) (order domain.Order, err error) {
 	repoO := repoOrder{}
 	result := r.db.Where("state = ?", "PENDING").Where("consumer_id = ?", consumerId).First(&repoO)
 
@@ -59,7 +59,7 @@ func (r *order) FindAvailableOrderByConsumerId(consumerId string) (order domain.
 	return repoO.transformDomain(), nil
 }
 
-func (r *order) GetAllOrders() (orders []domain.Order, err error) {
+func (r *repo) GetAllOrders() (orders []domain.Order, err error) {
 	repoOs := []repoOrder{}
 	result := r.db.Find(&repoOs)
 	if result.Error != nil {
@@ -73,7 +73,7 @@ func (r *order) GetAllOrders() (orders []domain.Order, err error) {
 	return orders, nil
 }
 
-func (r *order) GetAllOrderItemsByOrderId(orderId string) (ois []domain.OrderItem, err error) {
+func (r *repo) GetAllOrderItemsByOrderId(orderId string) (ois []domain.OrderItem, err error) {
 	repoOrderItems := []repoOrderItem{}
 	result := r.db.Where("order_id = ?", orderId).Find(&repoOrderItems)
 	if result.Error != nil {
@@ -87,7 +87,7 @@ func (r *order) GetAllOrderItemsByOrderId(orderId string) (ois []domain.OrderIte
 	return ois, nil
 }
 
-func (r *order) CreateOrderItem(oi *domain.OrderItem, consumerID string) error {
+func (r *repo) CreateOrderItem(oi *domain.OrderItem, consumerID string) error {
 	err := r.db.Transaction(func(tx *gorm.DB) error {
 		if oi.OrderID == "" {
 			o := &repoOrder{

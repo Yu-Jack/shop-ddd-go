@@ -24,7 +24,7 @@ type repoOrderItem struct {
 	UpdatedAt int    `json:"updated_at" gorm:"autoUpdateTime:milli"`
 }
 
-type Order interface {
+type Repo interface {
 	CreateOrder(o *domain.Order)
 	SaveOrder(o domain.Order)
 	UpdateOrderState(orderId string, newState string) error
@@ -36,12 +36,12 @@ type Order interface {
 	GetAllOrderItemsByOrderId(orderId string) ([]domain.OrderItem, error)
 }
 
-type order struct {
+type repo struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) Order {
-	return &order{
+func New(db *gorm.DB) Repo {
+	return &repo{
 		db: db,
 	}
 }
