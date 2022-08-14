@@ -28,9 +28,9 @@ func (u *user) CheckOrder(orderId string, orderAmount int, userId string) {
 	err := u.repo.DecreaseUserAmount(userId, orderAmount)
 
 	if err == nil {
-		u.eventBus.Publish(u.newOrderApprovedEvent(orderId))
+		u.event.NewOrderApprovedEvent(userDomain.ORDER_APPROVED_EVENT, orderId)
 	} else {
-		u.eventBus.Publish(u.newOrderRejectedEvent(orderId))
+		u.event.NewOrderRejectedEvent(userDomain.ORDER_REJECTED_EVENT, orderId)
 	}
 
 	fmt.Println(orderId)

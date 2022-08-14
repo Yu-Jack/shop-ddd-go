@@ -1,8 +1,8 @@
 package main
 
 import (
+	userEvent "github.com/Yu-Jack/shop-ddd-go/internal/adapter/event/user"
 	userRepo "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/user"
-	userEvent "github.com/Yu-Jack/shop-ddd-go/internal/event/user"
 	userRoute "github.com/Yu-Jack/shop-ddd-go/internal/router/handler/user"
 	userUc "github.com/Yu-Jack/shop-ddd-go/internal/usecase/user"
 	"github.com/Yu-Jack/shop-ddd-go/pkg/dddcore"
@@ -22,9 +22,9 @@ func main() {
 	eventBus := dddcore.NewEventBus()
 
 	userRepository := userRepo.New(db)
-	userUsecase := userUc.New(userRepository, eventBus)
+	userEvent := userEvent.New(eventBus)
+	userUsecase := userUc.New(userRepository, userEvent)
 
-	userEvent.New(userUsecase, eventBus).StartEventHandler()
 	userRoute.New(r, userUsecase).Route()
 
 	r.Run()

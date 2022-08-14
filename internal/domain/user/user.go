@@ -8,3 +8,7 @@ type User struct {
 	CreatedAt int
 	UpdatedAt int
 }
+
+var ORDER_CREATED_EVENT = "OrderCreated"
+var ORDER_APPROVED_EVENT = "OrderApproved"
+var ORDER_REJECTED_EVENT = "OrderRejected"

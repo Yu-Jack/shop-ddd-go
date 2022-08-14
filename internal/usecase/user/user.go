@@ -2,7 +2,6 @@ package user
 
 import (
 	userDomain "github.com/Yu-Jack/shop-ddd-go/internal/domain/user"
-	"github.com/Yu-Jack/shop-ddd-go/pkg/dddcore"
 )
 
 type CreateUserInput struct {
@@ -12,24 +11,22 @@ type CreateUserInput struct {
 }
 
 type User interface {
+	CheckOrder(orderId string, orderAmount int, userId string)
 	CreateUser(input CreateUserInput) userDomain.User
 	GetAllUsers() []userDomain.User
 }
 
-// TODO: renaming
-type UserAll interface {
-	User
-	UserEvent
-}
-
 type user struct {
-	repo     UserRepo
-	eventBus *dddcore.EventBus
+	repo  UserRepo
+	event UserEvent
 }
 
-func New(repo UserRepo, eventBus *dddcore.EventBus) UserAll {
-	return &user{
-		repo:     repo,
-		eventBus: eventBus,
+func New(repo UserRepo, event UserEvent) User {
+	u := &user{
+		repo:  repo,
+		event: event,
 	}
+
+	u.event.SubscribeOrderCreated(userDomain.ORDER_CREATED_EVENT, u.OrderCreated)
+	return u
 }
