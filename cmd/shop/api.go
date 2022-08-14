@@ -1,4 +1,4 @@
-package order
+package main
 
 import (
 	shopRepo "github.com/Yu-Jack/shop-ddd-go/internal/adapter/repository/mysql/shop"
