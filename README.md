@@ -35,6 +35,8 @@ It's mono-repo for microservices. The `<project>` folder means the different ser
     └── public pkg 2
 ```
 
+## Dependency Graph
 
+![](/images/dependency_graph.png)
 
 
