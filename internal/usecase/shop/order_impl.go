@@ -23,9 +23,9 @@ func (usecase *order) CheckoutOrder(ctx context.Context, input CheckoutOrderInpu
 	o.Amount = int(amount)
 	o.State = "CHECKOUT_PENDING"
 	usecase.repo.SaveOrder(o)
-	// o.CreatedOrderEvent()
-	// usecase.eventBus.Publish(o.DomainEvents)
+	usecase.eventBus.Publish(o.CreatedOrderEvent())
 
+	// TODO: add event handler to listen event from user.
 	// groupId := fmt.Sprintf("%s_%s", "order", o.ID)
 	// saga.CheckoutSaga(ctx, groupId, o.ID)
 

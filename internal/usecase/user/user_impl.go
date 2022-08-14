@@ -25,14 +25,13 @@ func (u *user) GetAllUsers() []userDomain.User {
 
 // TODO: should receive event to do check order
 func (u *user) CheckOrder(orderId string, orderAmount int, userId string) {
-	u.repo.DecreaseUserAmount(userId, orderAmount)
+	err := u.repo.DecreaseUserAmount(userId, orderAmount)
 
-	// TODO: should send event
-	// if err == nil {
-	// 	u.eventBus.Publish(entity.NewOrderApprovedEvent(orderId))
-	// } else {
-	// 	u.eventBus.Publish(entity.NewOrderRejectedEvent(orderId))
-	// }
+	if err == nil {
+		u.eventBus.Publish(u.newOrderApprovedEvent(orderId))
+	} else {
+		u.eventBus.Publish(u.newOrderRejectedEvent(orderId))
+	}
 
 	fmt.Println(orderId)
 	fmt.Println("sent order final state")

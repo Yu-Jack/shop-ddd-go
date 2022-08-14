@@ -4,6 +4,7 @@ import (
 	"context"
 
 	domain "github.com/Yu-Jack/shop-ddd-go/internal/domain/shop"
+	"github.com/Yu-Jack/shop-ddd-go/pkg/dddcore"
 )
 
 type CreateOrderInput struct {
@@ -26,11 +27,13 @@ type Order interface {
 }
 
 type order struct {
-	repo ShopRepo
+	repo     ShopRepo
+	eventBus *dddcore.EventBus
 }
 
-func NewOrder(repo ShopRepo) Order {
+func NewOrder(repo ShopRepo, eventBus *dddcore.EventBus) Order {
 	return &order{
-		repo: repo,
+		repo:     repo,
+		eventBus: eventBus,
 	}
 }
