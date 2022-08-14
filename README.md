@@ -3,47 +3,55 @@
 It's mono-repo for microservices. The `<project>` means the different service in below.
 
 ```
+.
 ├── Makefile
 ├── README.md
 ├── cmd
-│   ├── shop (<project>)
+│   ├── shop <project>
 │   │   ├── api.go
-│   │   └── shop
-│   └── user (<project>)
+│   │   └── shop <project>
+│   └── user <project>
 │       └── api.go
+├── go.mod
+├── go.sum
 ├── internal
 │   ├── adapter
 │   │   └── repository
 │   │       └── mysql
-│   │           ├── shop (<project>)
+│   │           ├── shop <project>
 │   │           │   ├── order.go
 │   │           │   └── order_impl.go
-│   │           └── user (<project>)
+│   │           └── user <project>
 │   │               ├── user.go
 │   │               └── user_impl.go
 │   ├── domain
-│   │   ├── shop (<project>)
+│   │   ├── shop <project>
 │   │   │   ├── order.go
 │   │   │   └── order_item.go
-│   │   └── user (<project>)
+│   │   └── user <project>
 │   │       └── user.go
+│   ├── event
+│   │   └── user <project>
+│   │       ├── user.go
+│   │       └── user_impl.go
 │   ├── router
 │   │   └── handler
 │   │       ├── middleware.go
-│   │       ├── shop (<project>)
+│   │       ├── shop <project>
 │   │       │   ├── hanlder.go
 │   │       │   └── request.go
-│   │       └── user (<project>)
+│   │       └── user <project>
 │   │           ├── handler.go
 │   │           └── request.go
 │   └── usecase
-│       ├── shop (<project>)
+│       ├── shop <project>
 │       │   ├── order.go
 │       │   ├── order_impl.go
 │       │   ├── order_item.go
 │       │   ├── order_item_impl.go
 │       │   └── repository.go
-│       └── user (<project>)
+│       └── user <project>
+│           ├── event.go
 │           ├── repository.go
 │           ├── user.go
 │           └── user_impl.go
