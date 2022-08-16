@@ -24,7 +24,9 @@ func main() {
 	repo := shopRepo.New(db)
 	orderUsecase := shopUsecase.NewOrder(repo, eventBus)
 	orderItemUsecase := shopUsecase.NewOrderItem(repo)
-	shopRoute.New(r, orderUsecase, orderItemUsecase).Route()
+
+	handler := shopRoute.New(r, orderUsecase, orderItemUsecase)
+	handler.Route()
 
 	r.Run()
 }

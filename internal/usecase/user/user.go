@@ -27,6 +27,5 @@ func New(repo UserRepo, event UserEvent) User {
 		event: event,
 	}
 
-	u.event.SubscribeOrderCreated(userDomain.ORDER_CREATED_EVENT, u.OrderCreated)
 	return u
 }

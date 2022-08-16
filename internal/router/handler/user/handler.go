@@ -3,17 +3,21 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 
+	userDomain "github.com/Yu-Jack/shop-ddd-go/internal/domain/user"
 	userUC "github.com/Yu-Jack/shop-ddd-go/internal/usecase/user"
 )
 
 type route struct {
 	engine *gin.Engine
 
-	userUC userUC.User
+	userUC      userUC.User
+	userEvent   userUC.UserEvent
+	userEventCB userUC.UserEventCacllback
 }
 
 type Router interface {
 	Route()
+	StartEventHandler()
 }
 
 func New(engine *gin.Engine, userUC userUC.User) Router {
@@ -21,6 +25,10 @@ func New(engine *gin.Engine, userUC userUC.User) Router {
 		engine: engine,
 		userUC: userUC,
 	}
+}
+
+func (r *route) StartEventHandler() {
+	r.userEvent.SubscribeOrderCreated(userDomain.ORDER_CREATED_EVENT, r.userEventCB.OrderCreatedCallback)
 }
 
 func (r *route) Route() {

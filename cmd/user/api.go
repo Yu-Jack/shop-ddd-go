@@ -25,7 +25,9 @@ func main() {
 	userEvent := userEvent.New(eventBus)
 	userUsecase := userUc.New(userRepository, userEvent)
 
-	userRoute.New(r, userUsecase).Route()
+	handler := userRoute.New(r, userUsecase)
+	handler.Route()
+	handler.StartEventHandler()
 
 	r.Run()
 }

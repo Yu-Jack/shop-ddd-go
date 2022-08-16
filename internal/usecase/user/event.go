@@ -6,3 +6,7 @@ type UserEvent interface {
 
 	SubscribeOrderCreated(eventName string, cb func(value string))
 }
+
+type UserEventCacllback interface {
+	OrderCreatedCallback(value string)
+}

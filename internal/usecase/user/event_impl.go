@@ -2,7 +2,7 @@ package user
 
 import "encoding/json"
 
-func (user *user) OrderCreated(value string) {
+func (user *user) OrderCreatedCallback(value string) {
 	type OrderCreatedEvent struct {
 		OrderId    string `json:"id"`
 		ConsumerID string `json:"consumer_id"`
